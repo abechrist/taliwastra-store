@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "contact": "Contact Us"
+  },
+  "home": {
+    "hero_title": "Exclusive Crochet, Handcrafted with Love",
+    "hero_subtitle": "Discover premium crochet collections from talented local artisans.",
+    "shop_now": "Shop Now",
+    "consultation": "Custom Product Consultation",
+    "featured_products": "Featured Products",
+    "view_all": "View All",
+    "our_promise": "Our Promise",
+    "promise_handmade": "100% Handmade",
+    "promise_quality": "Premium Quality",
+    "promise_local": "Local Artisans' Work"
+  },
+  "product": {
+    "add_to_cart": "Add to Cart",
+    "out_of_stock": "Out of Stock",
+    "in_stock": "In Stock",
+    "description": "Product Description",
+    "quantity": "Quantity",
+    "discount": "Discount"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty.",
+    "continue_shopping": "Continue Shopping",
+    "subtotal": "Subtotal",
+    "checkout": "Proceed to Checkout"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "shipping_info": "Shipping Information",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "address": "Full Address",
+    "province": "State/Province",
+    "city": "City",
+    "postal_code": "Postal Code",
+    "courier": "Courier",
+    "select_courier": "Select Courier",
+    "order_summary": "Order Summary",
+    "shipping_cost": "Shipping Cost",
+    "total": "Total",
+    "pay_now": "Pay Now"
+  },
+  "footer": {
+    "about": "Tali Wastra is a platform connecting authentic crochet masterpieces by local artisans with art lovers worldwide.",
+    "links": "Quick Links",
+    "contact_us": "Contact Us"
+  }
+}

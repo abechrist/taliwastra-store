@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "home": "Home",
+    "categories": "Kategori",
+    "contact": "Kontak"
+  },
+  "home": {
+    "hero_title": "Rajutan Eksklusif, Dirangkai Sepenuh Hati",
+    "hero_subtitle": "Temukan koleksi rajutan premium dari pengrajin lokal berbakat.",
+    "shop_now": "Belanja Sekarang",
+    "consultation": "Konsultasi Produk Custom",
+    "featured_products": "Produk Unggulan",
+    "view_all": "Lihat Semua",
+    "our_promise": "Janji Kami",
+    "promise_handmade": "100% Buatan Tangan",
+    "promise_quality": "Kualitas Premium",
+    "promise_local": "Karya Pengrajin Lokal"
+  },
+  "product": {
+    "add_to_cart": "Tambah ke Keranjang",
+    "out_of_stock": "Habis Terjual",
+    "in_stock": "Tersedia",
+    "description": "Deskripsi Produk",
+    "quantity": "Kuantitas",
+    "discount": "Diskon"
+  },
+  "cart": {
+    "title": "Keranjang Belanja",
+    "empty": "Keranjang Anda masih kosong.",
+    "continue_shopping": "Lanjut Belanja",
+    "subtotal": "Subtotal",
+    "checkout": "Proses Pembayaran"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "shipping_info": "Informasi Pengiriman",
+    "name": "Nama Lengkap",
+    "email": "Email",
+    "phone": "Nomor HP",
+    "address": "Alamat Lengkap",
+    "province": "Provinsi",
+    "city": "Kota/Kabupaten",
+    "postal_code": "Kode Pos",
+    "courier": "Kurir",
+    "select_courier": "Pilih Kurir",
+    "order_summary": "Ringkasan Pesanan",
+    "shipping_cost": "Ongkos Kirim",
+    "total": "Total Belanja",
+    "pay_now": "Bayar Sekarang"
+  },
+  "footer": {
+    "about": "Tali Wastra adalah platform yang menghubungkan karya rajut autentik pengrajin lokal dengan pecinta seni di seluruh dunia.",
+    "links": "Tautan",
+    "contact_us": "Hubungi Kami"
+  }
+}

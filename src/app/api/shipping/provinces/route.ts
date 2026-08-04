@@ -6,6 +6,9 @@ const RAJAONGKIR_BASE = process.env.RAJAONGKIR_IS_PRO === 'true'
 
 export async function GET(_req: NextRequest) {
   try {
+    if (!process.env.RAJAONGKIR_API_KEY) {
+      return NextResponse.json({ success: true, data: [] });
+    }
     const response = await fetch(`${RAJAONGKIR_BASE}/province`, {
       headers: { key: process.env.RAJAONGKIR_API_KEY! },
     });
@@ -13,6 +16,6 @@ export async function GET(_req: NextRequest) {
     return NextResponse.json({ success: true, data: (data.rajaongkir?.results as Record<string, unknown>[]) || [] });
   } catch (err) {
     console.error('getProvinces error:', err);
-    return NextResponse.json({ success: false, message: 'Gagal mengambil provinsi' }, { status: 500 });
+    return NextResponse.json({ success: true, data: [] });
   }
 }

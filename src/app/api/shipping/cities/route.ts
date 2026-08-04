@@ -6,6 +6,9 @@ const RAJAONGKIR_BASE = process.env.RAJAONGKIR_IS_PRO === 'true'
 
 export async function GET(req: NextRequest) {
   try {
+    if (!process.env.RAJAONGKIR_API_KEY) {
+      return NextResponse.json({ success: true, data: [] });
+    }
     const { searchParams } = new URL(req.url);
     const provinceId = searchParams.get('province');
     let url = `${RAJAONGKIR_BASE}/city`;
@@ -18,6 +21,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ success: true, data: (data.rajaongkir?.results as Record<string, unknown>[]) || [] });
   } catch (err) {
     console.error('getCities error:', err);
-    return NextResponse.json({ success: false, message: 'Gagal mengambil kota' }, { status: 500 });
+    return NextResponse.json({ success: true, data: [] });
   }
 }

@@ -13,6 +13,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, message: 'Semua field harus diisi (origin, destination, weight, courier)' }, { status: 400 });
     }
 
+    if (!process.env.RAJAONGKIR_API_KEY) {
+      return NextResponse.json({ success: true, data: [] });
+    }
+
     const response = await fetch(`${RAJAONGKIR_BASE}/cost`, {
       method: 'POST',
       headers: {
@@ -30,6 +34,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, data: (data.rajaongkir?.results as Record<string, unknown>[]) || [] });
   } catch (err) {
     console.error('getShippingCost error:', err);
-    return NextResponse.json({ success: false, message: 'Gagal menghitung ongkos kirim' }, { status: 500 });
+    return NextResponse.json({ success: true, data: [] });
   }
 }

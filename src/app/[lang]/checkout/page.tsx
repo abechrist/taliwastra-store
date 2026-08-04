@@ -225,7 +225,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
             </div>
           </div>
         </main>
-        <Footer />
+        <Footer lang={lang} />
       </>
     );
   }
@@ -267,7 +267,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
             </div>
           </div>
         </main>
-        <Footer />
+        <Footer lang={lang} />
       </>
     );
   }
@@ -285,7 +285,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
             </Link>
           </div>
         </main>
-        <Footer />
+        <Footer lang={lang} />
       </>
     );
   }

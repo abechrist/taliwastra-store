@@ -43,20 +43,26 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <Navbar lang={lang} dict={dict} />
-      <header className="relative pt-24 pb-28 md:pt-32 md:pb-40 overflow-hidden bg-surface-container-low">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 -left-32 w-[400px] h-[400px] bg-primary-container/10 rounded-full blur-3xl" />
-        </div>
+      <header className="relative pt-24 pb-28 md:pt-32 md:pb-40 overflow-hidden">
+        <Image
+          src="https://cdn.pixabay.com/photo/2020/05/12/18/37/crochet-5164435_1280.jpg"
+          alt="Rajutan benang wol buatan tangan"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/50 pointer-events-none" />
         <div className="max-w-[1280px] mx-auto px-5 md:px-16 relative z-10 flex flex-col items-center text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-soft-clay bg-linen-white/80 backdrop-blur-sm mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/25 bg-white/10 backdrop-blur-sm mb-6">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="font-label text-xs text-on-surface-variant uppercase tracking-wider">Handmade with love</span>
+            <span className="font-label text-xs text-white uppercase tracking-wider">Handmade with love</span>
           </div>
-          <h1 className="font-display text-[32px] md:text-[52px] text-on-primary-container mb-6 max-w-3xl leading-tight">
+          <h1 className="font-display text-[32px] md:text-[52px] text-white mb-6 max-w-3xl leading-tight drop-shadow-lg">
             {dict.home.hero_title}
           </h1>
-          <p className="font-body text-base md:text-lg text-on-surface-variant max-w-2xl mb-10 leading-relaxed">
+          <p className="font-body text-base md:text-lg text-white/85 max-w-2xl mb-10 leading-relaxed drop-shadow">
             {dict.home.hero_subtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
@@ -69,7 +75,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
             </Link>
             <Link
               href={`/${lang}/contact`}
-              className="bg-transparent border border-outline text-on-surface-variant font-label text-xs py-4 px-8 rounded-lg hover:bg-surface-container-high transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-widest"
+              className="bg-transparent border border-white/70 text-white font-label text-xs py-4 px-8 rounded-lg hover:bg-white/10 transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-widest"
             >
               {dict.home.consultation}
               <span className="material-symbols-outlined text-sm">chat_bubble</span>

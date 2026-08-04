@@ -51,7 +51,7 @@ export async function createAdminSessionToken(): Promise<string> {
 export async function verifyAdminSessionToken(value: string | undefined | null): Promise<boolean> {
   if (!value) return false;
   const parts = value.split('.');
-  if (parts.length !== 3) return false;
+  if (parts.length !== 2) return false;
 
   const [payload, signatureBase64] = parts;
   try {

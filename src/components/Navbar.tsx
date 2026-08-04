@@ -2,14 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import CartDrawer from './CartDrawer';
 import { getCart } from '@/lib/api';
 import { useState, useEffect, useCallback } from 'react';
 
 export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
   const pathname = usePathname();
   const router = useRouter();
-  const [cartOpen, setCartOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
 
   const navLabels = dict?.nav || {};
@@ -39,7 +37,7 @@ export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
 
   useEffect(() => {
     fetchCount();
-  }, [fetchCount, cartOpen]);
+  }, [fetchCount]);
 
   useEffect(() => {
     const handler = () => fetchCount();
@@ -95,9 +93,10 @@ export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => setCartOpen(true)}
+          <Link
+            href={`/${lang}/cart`}
             className="relative text-primary hover:text-primary-container transition-colors p-2 rounded-full hover:bg-surface-container-high"
+            aria-label="Keranjang belanja"
           >
             <span className="material-symbols-outlined text-[24px]">shopping_cart</span>
             {cartCount > 0 && (
@@ -105,11 +104,9 @@ export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
                 {cartCount}
               </span>
             )}
-          </button>
+          </Link>
         </div>
       </div>
-
-      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} lang={lang} dict={dict} />
     </nav>
   );
 }

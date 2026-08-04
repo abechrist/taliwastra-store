@@ -35,9 +35,11 @@ export default function ProductCard({ product, lang = 'id' }: { product: Product
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     try {
       await addToCart(product.id, 1);
       addToast('Produk ditambahkan ke keranjang!', 'success');
+      window.dispatchEvent(new CustomEvent('cart:updated'));
     } catch {
       addToast('Gagal menambahkan produk', 'error');
     }
@@ -92,6 +94,7 @@ export default function ProductCard({ product, lang = 'id' }: { product: Product
             </span>
           </div>
           <button
+            type="button"
             onClick={handleAddToCart}
             disabled={isOutOfStock}
             className="shrink-0 text-primary hover:bg-primary hover:text-white p-2.5 rounded-full transition-colors border border-soft-clay hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"

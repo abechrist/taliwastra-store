@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import CartDrawer from './CartDrawer';
 import { getCart } from '@/lib/api';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
   const pathname = usePathname();
@@ -27,18 +27,25 @@ export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
     router.push(`/${newLang}${currentPathWithoutLang}`);
   };
 
+  const fetchCount = useCallback(async () => {
+    try {
+      const res = await getCart();
+      const data = res.data || [];
+      setCartCount(data.reduce((sum: number, item: Record<string, unknown>) => sum + Number(item.quantity), 0));
+    } catch {
+      // ignore
+    }
+  }, []);
+
   useEffect(() => {
-    const fetchCount = async () => {
-      try {
-        const res = await getCart();
-        const data = res.data || [];
-        setCartCount(data.reduce((sum: number, item: Record<string, unknown>) => sum + Number(item.quantity), 0));
-      } catch {
-        // ignore
-      }
-    };
     fetchCount();
-  }, [cartOpen]);
+  }, [fetchCount, cartOpen]);
+
+  useEffect(() => {
+    const handler = () => fetchCount();
+    window.addEventListener('cart:updated', handler);
+    return () => window.removeEventListener('cart:updated', handler);
+  }, [fetchCount]);
 
   return (
     <nav className="bg-warm-canvas/95 backdrop-blur-sm sticky top-0 z-50 w-full border-b border-soft-clay/30 transition-all duration-300">

@@ -57,6 +57,7 @@ export default function ProductDetailClient({ slug, lang, dict, initialProduct, 
     try {
       await addToCart(product.id, quantity);
       addToast('Produk ditambahkan ke keranjang!', 'success');
+      window.dispatchEvent(new CustomEvent('cart:updated'));
       setQuantity(1);
     } catch {
       addToast('Gagal menambahkan produk', 'error');

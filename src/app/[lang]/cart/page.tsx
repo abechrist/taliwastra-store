@@ -130,7 +130,7 @@ export default function CartPage({ params }: { params: Promise<{ lang: string }>
                   <Link href={`/${lang}/products/${item.slug}`} className="shrink-0">
                     <div className="w-24 h-24 md:w-28 md:h-28 rounded-lg overflow-hidden bg-surface-container relative flex items-center justify-center">
                       {item.image_url ? (
-                        <Image src={item.image_url} alt={item.name} fill sizes="112px" className="object-cover" />
+                        <Image src={item.image_url} alt={item.name} fill sizes="112px" className="object-cover" unoptimized={item.image_url.startsWith('data:')} />
                       ) : (
                         <Icon name="image_not_supported" className="text-2xl text-outline" />
                       )}

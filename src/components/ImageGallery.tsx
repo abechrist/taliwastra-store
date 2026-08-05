@@ -28,6 +28,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
+            unoptimized={currentUrl.startsWith('data:')}
             onError={() => setFailedImages((prev) => ({ ...prev, [selected]: true }))}
           />
         ) : (
@@ -54,6 +55,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
                   fill
                   sizes="64px"
                   className="object-cover"
+                  unoptimized={url.startsWith('data:')}
                   onError={() => setFailedImages((prev) => ({ ...prev, [i]: true }))}
                 />
               ) : (

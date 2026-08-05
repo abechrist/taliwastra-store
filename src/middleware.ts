@@ -30,10 +30,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Skip API, Next.js internal, and public files
+  // Skip API, Next.js internal, uploads, and public files
   if (
     pathname.startsWith('/api') ||
     pathname.startsWith('/_next') ||
+    pathname.startsWith('/uploads') ||
     pathname.includes('.')
   ) {
     return NextResponse.next();

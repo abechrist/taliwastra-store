@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { addToCart } from '@/lib/api';
@@ -31,6 +32,7 @@ export type Product = {
 export default function ProductCard({ product, lang = 'id' }: { product: Product; lang?: string }) {
   const dict = getClientDictionary(lang);
   const imageUrl = product.images?.find((i) => i.is_primary)?.url || product.images?.[0]?.url || '';
+  const [imageError, setImageError] = useState(false);
   const tag = product.tags?.[0];
   const hasDiscount = product.original_price && Number(product.original_price) > Number(product.price);
   const discountPercent = hasDiscount ? Math.round(((Number(product.original_price) - Number(product.price)) / Number(product.original_price)) * 100) : 0;
@@ -51,13 +53,14 @@ export default function ProductCard({ product, lang = 'id' }: { product: Product
   return (
     <Link href={`/${lang}/products/${product.slug}`} className="linen-card rounded-xl overflow-hidden flex flex-col group cursor-pointer transition-all duration-300 relative">
       <div className="relative h-64 overflow-hidden bg-surface-container">
-        {imageUrl ? (
+        {imageUrl && !imageError ? (
           <Image
             src={imageUrl}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
+            onError={() => setImageError(true)}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-outline">

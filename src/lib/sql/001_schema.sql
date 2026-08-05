@@ -145,6 +145,30 @@ CREATE TABLE admin_users (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE expenses (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title VARCHAR(200) NOT NULL,
+  category VARCHAR(50) NOT NULL DEFAULT 'operasional',
+  amount NUMERIC(12,2) NOT NULL,
+  expense_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  supplier VARCHAR(150),
+  notes TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE product_hpp (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  product_id UUID NOT NULL UNIQUE REFERENCES products(id) ON DELETE CASCADE,
+  material_cost NUMERIC(12,2) NOT NULL DEFAULT 0,
+  labor_cost NUMERIC(12,2) NOT NULL DEFAULT 0,
+  overhead_cost NUMERIC(12,2) NOT NULL DEFAULT 0,
+  total_hpp NUMERIC(12,2) NOT NULL DEFAULT 0,
+  notes TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 -- ============================================
 -- Indexes
 -- ============================================
@@ -157,3 +181,6 @@ CREATE INDEX idx_orders_customer ON orders(customer_id);
 CREATE INDEX idx_orders_status ON orders(status);
 CREATE INDEX idx_orders_payment ON orders(payment_status);
 CREATE INDEX idx_order_items_order ON order_items(order_id);
+CREATE INDEX idx_expenses_category ON expenses(category);
+CREATE INDEX idx_expenses_date ON expenses(expense_date);
+CREATE INDEX idx_product_hpp_product ON product_hpp(product_id);

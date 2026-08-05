@@ -169,10 +169,10 @@ export async function createProduct(input: NewProductInput) {
     })
     .returning({ id: products.id });
 
-  if (input.image_url) {
+  if (input.image_url && input.image_url.trim() !== '') {
     await db.insert(productImages).values({
       product_id: created.id,
-      url: input.image_url,
+      url: input.image_url.trim(),
       is_primary: true,
     });
   }
@@ -233,13 +233,15 @@ export async function updateProduct(id: string, input: UpdateProductInput) {
     })
     .where(eq(products.id, id));
 
-  if (input.image_url) {
+  if (input.image_url !== undefined) {
     await db.delete(productImages).where(eq(productImages.product_id, id));
-    await db.insert(productImages).values({
-      product_id: id,
-      url: input.image_url,
-      is_primary: true,
-    });
+    if (input.image_url && input.image_url.trim() !== '') {
+      await db.insert(productImages).values({
+        product_id: id,
+        url: input.image_url.trim(),
+        is_primary: true,
+      });
+    }
   }
 }
 

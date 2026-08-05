@@ -165,6 +165,46 @@ export const adminUsers = pgTable('admin_users', {
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
+// Expenses (Financial records: raw materials, operational, labor, etc)
+export const expenses = pgTable(
+  'expenses',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    title: varchar('title', { length: 200 }).notNull(),
+    category: varchar('category', { length: 50 }).default('operasional').notNull(), // bahan_baku, operasional, gaji, pemasaran, lainnya
+    amount: decimal('amount', { precision: 12, scale: 2 }).notNull(),
+    expense_date: timestamp('expense_date', { withTimezone: true }).defaultNow().notNull(),
+    supplier: varchar('supplier', { length: 150 }),
+    notes: text('notes'),
+    created_at: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index('idx_expenses_category').on(table.category),
+    index('idx_expenses_date').on(table.expense_date),
+  ]
+);
+
+// Product HPP (Cost of Goods Sold breakdown per product)
+export const productHpp = pgTable(
+  'product_hpp',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    product_id: uuid('product_id')
+      .notNull()
+      .unique()
+      .references(() => products.id, { onDelete: 'cascade' }),
+    material_cost: decimal('material_cost', { precision: 12, scale: 2 }).default('0').notNull(),
+    labor_cost: decimal('labor_cost', { precision: 12, scale: 2 }).default('0').notNull(),
+    overhead_cost: decimal('overhead_cost', { precision: 12, scale: 2 }).default('0').notNull(),
+    total_hpp: decimal('total_hpp', { precision: 12, scale: 2 }).default('0').notNull(),
+    notes: text('notes'),
+    created_at: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [index('idx_product_hpp_product').on(table.product_id)]
+);
+
 // Relations
 export const productsRelations = relations(products, ({ one, many }) => ({
   category: one(categories, {
@@ -172,6 +212,17 @@ export const productsRelations = relations(products, ({ one, many }) => ({
     references: [categories.id],
   }),
   images: many(productImages),
+  hpp: one(productHpp, {
+    fields: [products.id],
+    references: [productHpp.product_id],
+  }),
+}));
+
+export const productHppRelations = relations(productHpp, ({ one }) => ({
+  product: one(products, {
+    fields: [productHpp.product_id],
+    references: [products.id],
+  }),
 }));
 
 export const productImagesRelations = relations(productImages, ({ one }) => ({

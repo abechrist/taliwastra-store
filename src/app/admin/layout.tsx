@@ -27,6 +27,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             { href: '/admin/products', icon: 'inventory_2', label: 'Produk' },
             { href: '/admin/orders', icon: 'shopping_cart', label: 'Pesanan' },
             { href: '/admin/categories', icon: 'category', label: 'Kategori' },
+            { href: '/admin/finances', icon: 'payments', label: 'Keuangan & HPP' },
+            { href: '/admin/users', icon: 'manage_accounts', label: 'Manajemen Admin' },
           ].map((item) => (
             <Link
               key={item.href}

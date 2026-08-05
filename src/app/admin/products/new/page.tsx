@@ -126,38 +126,78 @@ export default function NewProductPage() {
           <div className="card p-6">
             <h2 className="font-display text-lg text-on-surface border-b border-soft-clay/30 pb-4 mb-4">Media Produk</h2>
 
-            <div className="border-2 border-dashed border-outline-variant rounded-xl overflow-hidden relative min-h-[220px] flex flex-col items-center justify-center hover:border-primary/50 transition-colors mb-4">
+            <div className="border-2 border-dashed border-outline-variant rounded-xl overflow-hidden relative min-h-[220px] flex flex-col items-center justify-center hover:border-primary/50 transition-colors mb-4 bg-surface-container-lowest">
               {previewUrl ? (
-                <img src={previewUrl} alt="Preview" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="relative w-full h-[220px]">
+                  <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPreviewUrl('');
+                      setImageUrl('');
+                    }}
+                    className="absolute top-2 right-2 bg-error text-white p-1.5 rounded-full shadow-md hover:bg-error/80 transition-colors z-10"
+                    title="Hapus foto"
+                  >
+                    <Icon name="close" className="text-sm" />
+                  </button>
+                </div>
               ) : (
                 <>
                   <Icon name="add_photo_alternate" className="text-4xl text-outline mb-2" />
-                  <span className="font-body text-sm text-on-surface-variant">Klik untuk upload foto</span>
-                  <span className="font-body text-xs text-on-surface-variant mt-1">PNG, JPG, max 5MB</span>
+                  <span className="font-body text-sm text-on-surface-variant">Klik atau drag untuk upload foto</span>
+                  <span className="font-body text-xs text-on-surface-variant mt-1">PNG, JPG, WebP max 5MB</span>
+                  <input
+                    type="file"
+                    accept="image/png, image/jpeg, image/webp"
+                    onChange={handleFileUpload}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    disabled={isUploading}
+                  />
                 </>
               )}
-              <input type="file" accept="image/png, image/jpeg, image/webp" onChange={handleFileUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" disabled={isUploading} />
             </div>
 
             {isUploading && (
-              <p className="font-body text-xs text-primary flex items-center gap-1 mb-2">
+              <p className="font-body text-xs text-primary flex items-center gap-1 mb-4">
                 <Icon name="refresh" className="text-[14px] animate-spin" />
-                Sedang mengunggah...
+                Sedang mengunggah foto...
               </p>
             )}
 
-            <input type="hidden" name="image_url" value={imageUrl} />
+            <div className="mb-4">
+              <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">
+                URL Foto (Opsional / Otomatis dari Upload)
+              </label>
+              <input
+                type="text"
+                name="image_url"
+                value={imageUrl}
+                onChange={(e) => {
+                  setImageUrl(e.target.value);
+                  setPreviewUrl(e.target.value);
+                }}
+                className="input text-xs"
+                placeholder="https://... atau /uploads/..."
+              />
+            </div>
 
             <div>
-              <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Stok Produk <span className="text-error">*</span></label>
+              <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">
+                Stok Produk <span className="text-error">*</span>
+              </label>
               <input type="number" name="stock" required defaultValue="0" className="input text-center text-lg font-body" />
             </div>
           </div>
 
           <div className="sticky top-6 space-y-3">
-            <button type="submit" className="btn btn-primary w-full py-3">
+            <button
+              type="submit"
+              disabled={isUploading}
+              className="btn btn-primary w-full py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <Icon name="save" className="text-sm" />
-              Simpan Produk
+              {isUploading ? 'Mengunggah Foto...' : 'Simpan Produk'}
             </button>
             <Link href="/admin/products" className="btn btn-secondary w-full text-center">
               Batal

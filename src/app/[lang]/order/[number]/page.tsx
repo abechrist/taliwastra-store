@@ -1,6 +1,7 @@
 import { getDictionary } from '@/lib/dictionaries';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Icon from '@/components/Icon';
 
 export default async function OrderConfirmationPage({ params }: { params: Promise<{ lang: string; number: string }> }) {
   const { lang, number } = await params;
@@ -12,7 +13,7 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
       <main className="flex-grow w-full max-w-[1280px] mx-auto px-5 md:px-16 py-12">
         <div className="max-w-lg mx-auto text-center">
           <div className="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mx-auto mb-6">
-            <span className="material-symbols-outlined text-3xl text-primary">receipt_long</span>
+            <Icon name="receipt_long" className="text-3xl text-primary" />
           </div>
           <h1 className="font-display text-2xl md:text-3xl text-on-surface mb-3">{dict.order.title}</h1>
           <p className="font-body text-on-surface-variant mb-2">

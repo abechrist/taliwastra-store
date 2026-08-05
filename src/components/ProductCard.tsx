@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { addToCart } from '@/lib/api';
 import { addToast } from './Toast';
 import { getClientDictionary } from '@/lib/client-dictionary';
+import Icon from './Icon';
 
 export type Product = {
   id: string;
@@ -60,7 +61,7 @@ export default function ProductCard({ product, lang = 'id' }: { product: Product
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-outline">
-            <span className="material-symbols-outlined text-4xl">image_not_supported</span>
+            <Icon name="image_not_supported" className="text-4xl" />
           </div>
         )}
         {tag && (
@@ -102,9 +103,7 @@ export default function ProductCard({ product, lang = 'id' }: { product: Product
             className="shrink-0 text-primary hover:bg-primary hover:text-white p-2.5 rounded-full transition-colors border border-soft-clay hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
             title={dict.product.add_to_cart}
           >
-            <span className="material-symbols-outlined text-[20px]">
-              {isOutOfStock ? 'shopping_bag' : 'add_shopping_cart'}
-            </span>
+            <Icon name={isOutOfStock ? 'shopping_bag' : 'add_shopping_cart'} className="text-[20px]" />
           </button>
         </div>
       </div>

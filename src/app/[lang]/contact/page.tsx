@@ -5,6 +5,7 @@ import { use } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Breadcrumb from '@/components/Breadcrumb';
+import Icon from '@/components/Icon';
 import { submitContact } from '@/lib/api';
 import { addToast } from '@/components/Toast';
 import { getClientDictionary } from '@/lib/client-dictionary';
@@ -48,21 +49,21 @@ export default function ContactPage({ params }: { params: Promise<{ lang: string
             </p>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-secondary mt-0.5">location_on</span>
+                <Icon name="location_on" className="text-secondary mt-0.5" />
                 <div>
                   <p className="font-body text-sm font-medium text-on-surface">{dict.contact.address}</p>
                   <p className="font-body text-sm text-on-surface-variant">{dict.contact.address_value}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-secondary mt-0.5">email</span>
+                <Icon name="email" className="text-secondary mt-0.5" />
                 <div>
                   <p className="font-body text-sm font-medium text-on-surface">{dict.contact.email}</p>
                   <p className="font-body text-sm text-on-surface-variant">taliwastra@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-secondary mt-0.5">phone</span>
+                <Icon name="phone" className="text-secondary mt-0.5" />
                 <div>
                   <p className="font-body text-sm font-medium text-on-surface">{dict.contact.whatsapp}</p>
                   <p className="font-body text-sm text-on-surface-variant">+62 838-3634-4244</p>

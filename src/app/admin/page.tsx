@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getAdminStats, getRecentOrders } from '@/lib/db/repositories/orders';
 import { countActiveProducts } from '@/lib/db/repositories/products';
+import Icon from '@/components/Icon';
 
 export default async function AdminDashboard() {
   const stats = await getAdminStats();
@@ -26,7 +27,7 @@ export default async function AdminDashboard() {
           <div key={stat.label} className="linen-card rounded-xl p-5 md:p-6 border border-outline-variant/30">
             <div className="flex items-start justify-between mb-4">
               <span className="font-body text-xs text-on-surface-variant uppercase tracking-wider">{stat.label}</span>
-              <span className={`material-symbols-outlined ${stat.color}`}>{stat.icon}</span>
+              <Icon name={stat.icon} className={stat.color} />
             </div>
             <p className="font-display text-xl md:text-2xl text-on-surface">{stat.value}</p>
           </div>

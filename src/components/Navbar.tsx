@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { getCart } from '@/lib/api';
 import { useState, useEffect, useCallback } from 'react';
+import Icon from './Icon';
 
 export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
   const pathname = usePathname();
@@ -104,7 +105,7 @@ export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
             className="relative text-primary hover:text-primary-container transition-colors p-2 rounded-full hover:bg-surface-container-high"
             aria-label={navLabels.cart || 'Keranjang belanja'}
           >
-            <span className="material-symbols-outlined text-[24px]">shopping_cart</span>
+            <Icon name="shopping_cart" className="text-[24px]" />
             {cartCount > 0 && (
               <span className="absolute -top-0.5 -right-0.5 bg-primary text-white text-[10px] font-label font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
                 {cartCount}
@@ -118,7 +119,7 @@ export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
             aria-label="Menu"
             aria-expanded={mobileOpen}
           >
-            <span className="material-symbols-outlined text-[26px]">{mobileOpen ? 'close' : 'menu'}</span>
+            <Icon name={mobileOpen ? 'close' : 'menu'} className="text-[26px]" />
           </button>
         </div>
       </div>

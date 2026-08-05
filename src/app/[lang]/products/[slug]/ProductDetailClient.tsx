@@ -9,6 +9,7 @@ import ProductCard from '@/components/ProductCard';
 import { addToCart } from '@/lib/api';
 import { addToast } from '@/components/Toast';
 import type { Product } from '@/components/ProductCard';
+import Icon from '@/components/Icon';
 
 type Dictionary = Record<string, any>;
 
@@ -83,7 +84,7 @@ export default function ProductDetailClient({ slug, lang, dict, initialProduct, 
     return (
       <main className="flex-grow flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <span className="material-symbols-outlined text-5xl text-outline mb-4 block">product_off</span>
+          <Icon name="product_off" className="text-5xl text-outline mb-4 block" />
           <p className="font-body text-lg text-on-surface-variant">{dict.product.not_found}</p>
           <Link href={`/${lang}/categories`} className="btn btn-primary mt-6">
             {dict.product.back_to_catalog}
@@ -169,14 +170,14 @@ export default function ProductDetailClient({ slug, lang, dict, initialProduct, 
                 disabled={isOutOfStock}
                 className="btn btn-primary w-full py-4 text-base"
               >
-                <span className="material-symbols-outlined">shopping_cart</span>
+                <Icon name="shopping_cart" />
                 {isOutOfStock ? dict.product.out_of_stock : dict.product.add_to_cart}
               </button>
             </div>
 
             <div className="bg-surface-container-low rounded-xl p-6 border border-outline-variant/50 space-y-4">
               <h2 className="font-display text-xl text-on-background flex items-center gap-2">
-                <span className="material-symbols-outlined text-secondary">description</span>
+                <Icon name="description" className="text-secondary" />
                 {dict.product.description}
               </h2>
               <div className="text-on-surface-variant font-body text-sm leading-relaxed whitespace-pre-line">

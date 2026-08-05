@@ -11,6 +11,7 @@ import QuantitySelector from '@/components/QuantitySelector';
 import { getCart, updateCartItem, removeCartItem, clearCart } from '@/lib/api';
 import { addToast } from '@/components/Toast';
 import { getClientDictionary } from '@/lib/client-dictionary';
+import Icon from '@/components/Icon';
 
 type CartItem = {
   id: string;
@@ -107,7 +108,7 @@ export default function CartPage({ params }: { params: Promise<{ lang: string }>
           </div>
         ) : items.length === 0 ? (
           <div className="text-center py-20">
-            <span className="material-symbols-outlined text-6xl text-outline mb-4 block">shopping_cart</span>
+            <Icon name="shopping_cart" className="text-6xl text-outline mb-4 block" />
             <p className="font-body text-lg text-on-surface-variant mb-6">{dict.cart.empty}</p>
             <Link href={`/${lang}/categories`} className="btn btn-primary">
               {dict.cart.start_shopping}
@@ -156,7 +157,7 @@ export default function CartPage({ params }: { params: Promise<{ lang: string }>
                         className="text-error hover:bg-error/10 p-2 rounded-lg transition-colors"
                         title={dict.cart.remove}
                       >
-                        <span className="material-symbols-outlined text-[20px]">delete</span>
+                        <Icon name="delete" className="text-[20px]" />
                       </button>
                     </div>
                   </div>

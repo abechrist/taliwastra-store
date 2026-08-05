@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { deleteProductAction } from '../actions/products';
 import { getAdminProducts } from '@/lib/db/repositories/products';
+import Icon from '@/components/Icon';
 
 export default async function AdminProducts() {
   const products = await getAdminProducts();
@@ -15,7 +16,7 @@ export default async function AdminProducts() {
           <p className="font-body text-sm text-on-surface-variant mt-1">Kelola katalog produk Anda</p>
         </div>
         <Link href="/admin/products/new" className="btn btn-primary">
-          <span className="material-symbols-outlined text-sm">add</span>
+          <Icon name="add" className="text-sm" />
           Tambah Produk
         </Link>
       </div>

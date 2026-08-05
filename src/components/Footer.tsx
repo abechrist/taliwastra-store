@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Icon from './Icon';
 
 export default function Footer({ lang, dict }: { lang?: string; dict?: any }) {
   const currentYear = new Date().getFullYear();
@@ -90,11 +91,11 @@ export default function Footer({ lang, dict }: { lang?: string; dict?: any }) {
             </h4>
             <ul className="space-y-3">
               <li className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm text-on-surface-variant">location_on</span>
+                <Icon name="location_on" className="text-sm text-on-surface-variant" />
                 <span className="font-body text-sm text-on-secondary-fixed-variant">{dict?.footer?.address || 'Perum. Gunungsari Asri Gg. Anggrek No. 4, Sidorejo Kidul, Tingkir, Kota Salatiga 50741'}</span>
               </li>
               <li className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm text-on-surface-variant">email</span>
+                <Icon name="email" className="text-sm text-on-surface-variant" />
                 <span className="font-body text-sm text-on-secondary-fixed-variant">taliwastra@gmail.com</span>
               </li>
             </ul>
@@ -106,9 +107,9 @@ export default function Footer({ lang, dict }: { lang?: string; dict?: any }) {
             &copy; {currentYear} {dict?.footer?.copyright || 'Taliwastra Handmade. Dibuat dengan cinta.'}
           </p>
           <div className="flex items-center gap-4 text-on-surface-variant">
-            <span className="material-symbols-outlined text-2xl" title="Visa">credit_card</span>
-            <span className="material-symbols-outlined text-2xl" title="Mastercard">payment</span>
-            <span className="material-symbols-outlined text-2xl" title="Bank Transfer">account_balance</span>
+            <Icon name="credit_card" className="text-2xl" title="Visa" />
+            <Icon name="payment" className="text-2xl" title="Mastercard" />
+            <Icon name="account_balance" className="text-2xl" title="Bank Transfer" />
           </div>
         </div>
       </div>

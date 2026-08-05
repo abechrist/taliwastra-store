@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Icon from './Icon';
 
 type BreadcrumbItem = {
   label: string;
@@ -17,7 +18,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
       {items.map((item, index) => (
         <span key={index} className="flex items-center gap-2">
           {index > 0 && (
-            <span className="material-symbols-outlined text-[16px] opacity-60">chevron_right</span>
+            <Icon name="chevron_right" className="text-[16px] opacity-60" />
           )}
           {item.href ? (
             <Link href={item.href} className="hover:text-primary transition-colors">

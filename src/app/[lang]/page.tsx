@@ -7,6 +7,7 @@ import { getProducts } from '@/lib/db/repositories/products';
 import { getCategories } from '@/lib/db/repositories/categories';
 import Link from 'next/link';
 import Image from 'next/image';
+import Icon from '@/components/Icon';
 
 type Category = {
   id: string;
@@ -43,6 +44,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <Navbar lang={lang} dict={dict} />
+      <main>
       <header className="relative pt-24 pb-28 md:pt-32 md:pb-40 overflow-hidden">
         <Image
           src="https://cdn.pixabay.com/photo/2020/05/12/18/37/crochet-5164435_1280.jpg"
@@ -71,14 +73,14 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               className="bg-primary text-on-primary font-label text-xs py-4 px-8 rounded-lg hover:bg-on-primary-fixed-variant transition-colors shadow-sm inline-flex items-center justify-center gap-2 uppercase tracking-widest"
             >
               {dict.home.shop_now}
-              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              <Icon name="arrow_forward" className="text-sm" />
             </Link>
             <Link
               href={`/${lang}/contact`}
               className="bg-transparent border border-white/70 text-white font-label text-xs py-4 px-8 rounded-lg hover:bg-white/10 transition-colors inline-flex items-center justify-center gap-2 uppercase tracking-widest"
             >
               {dict.home.consultation}
-              <span className="material-symbols-outlined text-sm">chat_bubble</span>
+              <Icon name="chat_bubble" className="text-sm" />
             </Link>
           </div>
         </div>
@@ -109,7 +111,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-surface-container-high">
-                    <span className="material-symbols-outlined text-5xl text-outline">category</span>
+                    <Icon name="category" className="text-5xl text-outline" />
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -134,7 +136,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
             </div>
             <Link href={`/${lang}/categories`} className="hidden md:inline-flex items-center gap-1 font-label text-xs text-primary hover:text-on-primary transition-colors">
               {dict.home.view_all}
-              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              <Icon name="arrow_forward" className="text-sm" />
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -144,7 +146,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           </div>
           {featuredProducts.length === 0 && (
             <div className="text-center py-16">
-              <span className="material-symbols-outlined text-5xl text-outline mb-4 block">inventory_2</span>
+              <Icon name="inventory_2" className="text-5xl text-outline mb-4 block" />
               <p className="font-body text-on-surface-variant">{dict.home.no_featured}</p>
             </div>
           )}
@@ -180,7 +182,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
                   },
                 ].map((item) => (
                   <div key={item.title} className="text-center md:text-left">
-                    <span className="material-symbols-outlined text-3xl text-primary mb-4 block">{item.icon}</span>
+                    <Icon name={item.icon} className="text-3xl text-primary mb-4 block" />
                     <h3 className="font-display text-xl text-on-surface mb-2">{item.title}</h3>
                     <p className="font-body text-sm text-on-surface-variant leading-relaxed">{item.desc}</p>
                   </div>
@@ -190,6 +192,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           </div>
         </div>
       </section>
+      </main>
       <Footer lang={lang} dict={dict} />
     </>
   );

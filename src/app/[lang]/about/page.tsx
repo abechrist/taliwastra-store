@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { getDictionary } from '@/lib/dictionaries';
+import Icon from '@/components/Icon';
 
 export default async function AboutPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -22,7 +23,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16">
             <div className="md:col-span-5 bg-linen-white rounded-2xl p-8 md:p-12 border border-outline-variant/50 flex flex-col justify-center">
-              <span className="material-symbols-outlined text-primary mb-6 text-4xl">auto_awesome</span>
+              <Icon name="auto_awesome" className="text-primary mb-6 text-4xl" />
               <h2 className="text-2xl font-display text-on-surface mb-4">{dict.about.visi_title}</h2>
               <p className="text-base font-body text-on-surface-variant leading-relaxed">
                 {dict.about.visi_desc}
@@ -31,7 +32,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             <div className="md:col-span-7 rounded-2xl overflow-hidden bg-surface-container min-h-[300px] md:min-h-0">
             </div>
             <div className="md:col-span-6 bg-surface-container-low rounded-2xl p-8 md:p-12 flex flex-col justify-center">
-              <span className="material-symbols-outlined text-primary mb-6 text-4xl">volunteer_activism</span>
+              <Icon name="volunteer_activism" className="text-primary mb-6 text-4xl" />
               <h2 className="text-2xl font-display text-on-surface mb-4">{dict.about.proses_title}</h2>
               <p className="text-base font-body text-on-surface-variant leading-relaxed mb-6">
                 {dict.about.proses_desc}
@@ -39,14 +40,14 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               <ul className="flex flex-col gap-3">
                 {dict.about.proses_items.map((item: string) => (
                   <li key={item} className="flex items-center gap-3 font-body text-sm text-on-surface-variant">
-                    <span className="material-symbols-outlined text-secondary text-sm">radio_button_checked</span>
+                    <Icon name="radio_button_checked" className="text-secondary text-sm" />
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
             <div className="md:col-span-6 bg-surface-container-high rounded-2xl p-8 md:p-12 flex flex-col justify-center">
-              <span className="material-symbols-outlined text-primary mb-6 text-4xl">eco</span>
+              <Icon name="eco" className="text-primary mb-6 text-4xl" />
               <h2 className="text-2xl font-display text-on-surface mb-4">{dict.about.berkelanjutan_title}</h2>
               <p className="text-base font-body text-on-surface-variant leading-relaxed mb-6">
                 {dict.about.berkelanjutan_desc}
@@ -54,7 +55,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               <ul className="flex flex-col gap-3">
                 {dict.about.berkelanjutan_items.map((item: string) => (
                   <li key={item} className="flex items-center gap-3 font-body text-sm text-on-surface-variant">
-                    <span className="material-symbols-outlined text-secondary text-sm">radio_button_checked</span>
+                    <Icon name="radio_button_checked" className="text-secondary text-sm" />
                     {item}
                   </li>
                 ))}

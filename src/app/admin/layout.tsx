@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { logoutAction } from './actions/auth';
+import Icon from '@/components/Icon';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
@@ -32,7 +33,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               href={item.href}
               className="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface hover:bg-surface-container-high transition-colors font-medium text-sm"
             >
-              <span className="material-symbols-outlined text-xl">{item.icon}</span>
+              <Icon name={item.icon} className="text-xl" />
               {item.label}
             </Link>
           ))}
@@ -41,7 +42,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <div className="p-4 border-t border-outline-variant mt-auto">
           <form action={logoutAction}>
             <button className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-error hover:bg-error-container transition-colors font-medium text-sm w-full text-left">
-              <span className="material-symbols-outlined text-xl">logout</span>
+              <Icon name="logout" className="text-xl" />
               Keluar
             </button>
           </form>

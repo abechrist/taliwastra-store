@@ -5,6 +5,7 @@ import { use } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Breadcrumb from '@/components/Breadcrumb';
+import Icon from '@/components/Icon';
 import { getOrder } from '@/lib/api';
 import { getClientDictionary } from '@/lib/client-dictionary';
 
@@ -99,7 +100,7 @@ export default function TrackPage({ params }: { params: Promise<{ lang: string }
             />
             <button type="submit" disabled={loading} className="btn btn-primary">
               {loading ? (
-                <span className="material-symbols-outlined animate-spin">sync</span>
+                <Icon name="sync" className="animate-spin" />
               ) : (
                 dict.track.track
               )}
@@ -184,7 +185,7 @@ export default function TrackPage({ params }: { params: Promise<{ lang: string }
             {order.status && statusConfig[order.status] && (
               <div className="card p-6">
                 <div className="flex items-start gap-4">
-                  <span className="material-symbols-outlined text-3xl text-primary">{statusConfig[order.status].icon}</span>
+                  <Icon name={statusConfig[order.status].icon} className="text-3xl text-primary" />
                   <div>
                     <p className="font-body text-sm font-medium text-on-surface">{dict.track.status.replace('{status}', statusConfig[order.status].label)}</p>
                     <p className="font-body text-xs text-on-surface-variant mt-1">

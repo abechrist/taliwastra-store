@@ -9,6 +9,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import { getCart, createOrder, getProvinces, getCities, getShippingCost } from '@/lib/api';
 import { addToast } from '@/components/Toast';
 import { getClientDictionary } from '@/lib/client-dictionary';
+import Icon from '@/components/Icon';
 
 type CartItem = {
   id: string;
@@ -239,7 +240,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
         <main className="flex-grow w-full max-w-[1280px] mx-auto px-5 md:px-16 py-12">
           <div className="max-w-2xl mx-auto text-center">
             <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
-              <span className="material-symbols-outlined text-3xl text-green-600">check_circle</span>
+              <Icon name="check_circle" className="text-3xl text-green-600" />
             </div>
             <h1 className="font-display text-2xl md:text-3xl text-on-surface mb-3">{dict.checkout.order_success}</h1>
             <p className="font-body text-on-surface-variant mb-2">
@@ -255,7 +256,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
                 rel="noopener noreferrer"
                 className="btn btn-primary mb-4"
               >
-                <span className="material-symbols-outlined">payment</span>
+                <Icon name="payment" />
                 {dict.checkout.pay_now}
               </a>
             )}
@@ -280,7 +281,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
         <Navbar lang={lang} dict={dict} />
         <main className="flex-grow w-full max-w-[1280px] mx-auto px-5 md:px-16 py-12">
           <div className="text-center py-20">
-            <span className="material-symbols-outlined text-6xl text-outline mb-4 block">shopping_cart</span>
+            <Icon name="shopping_cart" className="text-6xl text-outline mb-4 block" />
             <p className="font-body text-lg text-on-surface-variant mb-6">{dict.checkout.cart_empty_page}</p>
             <Link href={`/${lang}/categories`} className="btn btn-primary">
               {dict.checkout.start_shopping}
@@ -310,7 +311,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
           <div className="lg:col-span-7 space-y-8">
             <section className="card p-6 md:p-8 space-y-6">
               <h2 className="font-display text-xl text-on-surface flex items-center gap-2">
-                <span className="material-symbols-outlined text-secondary">person</span>
+                <Icon name="person" className="text-secondary" />
                 {dict.checkout.shipping_info}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
@@ -357,7 +358,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
 
             <section className="card p-6 md:p-8 space-y-6">
               <h2 className="font-display text-xl text-on-surface flex items-center gap-2">
-                <span className="material-symbols-outlined text-secondary">local_shipping</span>
+                <Icon name="local_shipping" className="text-secondary" />
                 {dict.checkout.shipping_section}
               </h2>
               <div>
@@ -372,7 +373,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
                         form.courier === c.code ? 'border-primary bg-primary/5 text-primary font-medium' : 'border-outline-variant text-on-surface-variant hover:border-primary/50'
                       }`}
                     >
-                      <span className="material-symbols-outlined text-sm">{c.icon}</span>
+                      <Icon name={c.icon} className="text-sm" />
                       {c.name}
                     </button>
                   ))}
@@ -463,12 +464,12 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
               <button type="submit" disabled={submitting || items.length === 0} className="btn btn-primary w-full py-4">
                 {submitting ? (
                   <>
-                    <span className="material-symbols-outlined animate-spin">sync</span>
+                    <Icon name="sync" className="animate-spin" />
                     {dict.checkout.processing}
                   </>
                 ) : (
                   <>
-                    <span className="material-symbols-outlined">lock</span>
+                    <Icon name="lock" />
                     {dict.checkout.pay_now}
                   </>
                 )}

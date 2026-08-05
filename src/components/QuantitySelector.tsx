@@ -1,5 +1,7 @@
 'use client';
 
+import Icon from './Icon';
+
 type QuantitySelectorProps = {
   value: number;
   onChange: (value: number) => void;
@@ -19,7 +21,7 @@ export default function QuantitySelector({ value, onChange, min = 1, max = 99, d
         disabled={disabled || value <= min}
         className="px-4 py-2 text-secondary hover:text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
       >
-        <span className="material-symbols-outlined text-[20px]">remove</span>
+        <Icon name="remove" className="text-[20px]" />
       </button>
       <input
         readOnly
@@ -31,7 +33,7 @@ export default function QuantitySelector({ value, onChange, min = 1, max = 99, d
         disabled={disabled || value >= max}
         className="px-4 py-2 text-secondary hover:text-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
       >
-        <span className="material-symbols-outlined text-[20px]">add</span>
+        <Icon name="add" className="text-[20px]" />
       </button>
     </div>
   );

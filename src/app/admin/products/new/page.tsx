@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { createProductAction } from '../../actions/products';
+import Icon from '@/components/Icon';
 
 type Category = {
   id: string;
@@ -53,7 +54,7 @@ export default function NewProductPage() {
     <div className="max-w-5xl mx-auto pb-12">
       <div className="flex items-center gap-4 mb-8">
         <Link href="/admin/products" className="w-10 h-10 rounded-full bg-linen-white border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors">
-          <span className="material-symbols-outlined text-lg">arrow_back</span>
+          <Icon name="arrow_back" className="text-lg" />
         </Link>
         <div>
           <h1 className="font-display text-2xl text-on-surface">Tambah Produk Baru</h1>
@@ -130,7 +131,7 @@ export default function NewProductPage() {
                 <img src={previewUrl} alt="Preview" className="absolute inset-0 w-full h-full object-cover" />
               ) : (
                 <>
-                  <span className="material-symbols-outlined text-4xl text-outline mb-2">add_photo_alternate</span>
+                  <Icon name="add_photo_alternate" className="text-4xl text-outline mb-2" />
                   <span className="font-body text-sm text-on-surface-variant">Klik untuk upload foto</span>
                   <span className="font-body text-xs text-on-surface-variant mt-1">PNG, JPG, max 5MB</span>
                 </>
@@ -140,7 +141,7 @@ export default function NewProductPage() {
 
             {isUploading && (
               <p className="font-body text-xs text-primary flex items-center gap-1 mb-2">
-                <span className="material-symbols-outlined text-[14px] animate-spin">refresh</span>
+                <Icon name="refresh" className="text-[14px] animate-spin" />
                 Sedang mengunggah...
               </p>
             )}
@@ -155,7 +156,7 @@ export default function NewProductPage() {
 
           <div className="sticky top-6 space-y-3">
             <button type="submit" className="btn btn-primary w-full py-3">
-              <span className="material-symbols-outlined text-sm">save</span>
+              <Icon name="save" className="text-sm" />
               Simpan Produk
             </button>
             <Link href="/admin/products" className="btn btn-secondary w-full text-center">

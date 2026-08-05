@@ -8,6 +8,7 @@ import ProductCard from '@/components/ProductCard';
 import { getProducts, getCategories } from '@/lib/api';
 import { getClientDictionary } from '@/lib/client-dictionary';
 import type { Product } from '@/components/ProductCard';
+import Icon from '@/components/Icon';
 
 type Category = { id: string; name: string; slug: string; description?: string };
 
@@ -110,7 +111,7 @@ export default function CategoriesPage({ params }: { params: Promise<{ lang: str
                     >
                       <span>{cat.name}</span>
                       {selectedCategory === cat.slug && (
-                        <span className="material-symbols-outlined text-sm">check</span>
+                        <Icon name="check" className="text-sm" />
                       )}
                     </button>
                   </li>
@@ -122,7 +123,7 @@ export default function CategoriesPage({ params }: { params: Promise<{ lang: str
           <section className="flex-1 min-w-0">
             <div className="flex flex-col sm:flex-row gap-3 mb-6">
               <div className="relative flex-1">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
                 <input
                   type="text"
                   placeholder={dict.categories.search_placeholder}
@@ -145,7 +146,7 @@ export default function CategoriesPage({ params }: { params: Promise<{ lang: str
                 onClick={() => setFilterOpen(!filterOpen)}
                 className="lg:hidden btn btn-secondary flex items-center gap-2"
               >
-                <span className="material-symbols-outlined text-sm">filter_list</span>
+                <Icon name="filter_list" className="text-sm" />
                 {dict.categories.filter}
               </button>
             </div>
@@ -155,7 +156,7 @@ export default function CategoriesPage({ params }: { params: Promise<{ lang: str
                 <span className="text-sm text-on-surface-variant">{dict.categories.active_filter}</span>
                 <span className="badge badge-primary">{activeCategoryName}</span>
                 <button onClick={() => setSelectedCategory('')} className="text-on-surface-variant hover:text-primary">
-                  <span className="material-symbols-outlined text-sm">close</span>
+                  <Icon name="close" className="text-sm" />
                 </button>
               </div>
             )}
@@ -168,7 +169,7 @@ export default function CategoriesPage({ params }: { params: Promise<{ lang: str
               </div>
             ) : filtered.length === 0 ? (
               <div className="text-center py-16">
-                <span className="material-symbols-outlined text-5xl text-outline mb-4 block">search_off</span>
+                <Icon name="search_off" className="text-5xl text-outline mb-4 block" />
                 <p className="font-body text-on-surface-variant">{dict.categories.no_results}</p>
               </div>
             ) : (

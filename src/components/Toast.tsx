@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Icon from './Icon';
 
 type ToastType = 'success' | 'error' | 'info';
 
@@ -52,10 +53,10 @@ export default function Toast() {
     <div className="toast-container">
       {toasts.map((toast) => (
         <div key={toast.id} className="toast">
-          <span className={`material-symbols-outlined ${colorMap[toast.type]}`}>{iconMap[toast.type]}</span>
+          <Icon name={iconMap[toast.type]} className={colorMap[toast.type]} />
           <span className="font-body text-sm text-on-surface flex-1">{toast.message}</span>
           <button onClick={() => removeToast(toast.id)} className="text-on-surface-variant hover:text-on-surface">
-            <span className="material-symbols-outlined text-sm">close</span>
+            <Icon name="close" className="text-sm" />
           </button>
         </div>
       ))}

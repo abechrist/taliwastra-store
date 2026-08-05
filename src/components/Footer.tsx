@@ -95,7 +95,7 @@ export default function Footer({ lang, dict }: { lang?: string; dict?: any }) {
               </li>
               <li className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm text-on-surface-variant">email</span>
-                <span className="font-body text-sm text-on-secondary-fixed-variant">hello@taliwastra.id</span>
+                <span className="font-body text-sm text-on-secondary-fixed-variant">taliwastra@gmail.com</span>
               </li>
             </ul>
           </div>

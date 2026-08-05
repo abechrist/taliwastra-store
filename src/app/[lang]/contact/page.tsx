@@ -58,7 +58,7 @@ export default function ContactPage({ params }: { params: Promise<{ lang: string
                 <span className="material-symbols-outlined text-secondary mt-0.5">email</span>
                 <div>
                   <p className="font-body text-sm font-medium text-on-surface">{dict.contact.email}</p>
-                  <p className="font-body text-sm text-on-surface-variant">hello@taliwastra.id</p>
+                  <p className="font-body text-sm text-on-surface-variant">taliwastra@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">

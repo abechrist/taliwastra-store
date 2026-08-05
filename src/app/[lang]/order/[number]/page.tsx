@@ -14,19 +14,19 @@ export default async function OrderConfirmationPage({ params }: { params: Promis
           <div className="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mx-auto mb-6">
             <span className="material-symbols-outlined text-3xl text-primary">receipt_long</span>
           </div>
-          <h1 className="font-display text-2xl md:text-3xl text-on-surface mb-3">Pesanan Dikonfirmasi</h1>
+          <h1 className="font-display text-2xl md:text-3xl text-on-surface mb-3">{dict.order.title}</h1>
           <p className="font-body text-on-surface-variant mb-2">
-            Nomor Pesanan: <span className="font-bold text-primary">{number}</span>
+            {dict.order.order_number} <span className="font-bold text-primary">{number}</span>
           </p>
           <p className="font-body text-sm text-on-surface-variant mb-8">
-            Terima kasih atas pesanan Anda. Kami akan segera memprosesnya.
+            {dict.order.thanks}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a href={`/${lang}/track?order=${number}`} className="btn btn-primary">
-              Lacak Pesanan
+              {dict.order.track}
             </a>
             <a href={`/${lang}/categories`} className="btn btn-secondary">
-              Lanjut Belanja
+              {dict.order.continue_shopping}
             </a>
           </div>
         </div>

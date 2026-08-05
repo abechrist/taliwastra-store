@@ -96,7 +96,7 @@ export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
           <Link
             href={`/${lang}/cart`}
             className="relative text-primary hover:text-primary-container transition-colors p-2 rounded-full hover:bg-surface-container-high"
-            aria-label="Keranjang belanja"
+            aria-label={navLabels.cart || 'Keranjang belanja'}
           >
             <span className="material-symbols-outlined text-[24px]">shopping_cart</span>
             {cartCount > 0 && (

@@ -46,7 +46,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <header className="relative pt-24 pb-28 md:pt-32 md:pb-40 overflow-hidden">
         <Image
           src="https://cdn.pixabay.com/photo/2020/05/12/18/37/crochet-5164435_1280.jpg"
-          alt="Rajutan benang wol buatan tangan"
+          alt={dict.home.handmade_badge}
           fill
           priority
           sizes="100vw"
@@ -57,7 +57,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         <div className="max-w-[1280px] mx-auto px-5 md:px-16 relative z-10 flex flex-col items-center text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/25 bg-white/10 backdrop-blur-sm mb-6">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="font-label text-xs text-white uppercase tracking-wider">Handmade with love</span>
+            <span className="font-label text-xs text-white uppercase tracking-wider">{dict.home.handmade_badge}</span>
           </div>
           <h1 className="font-display text-[32px] md:text-[52px] text-white mb-6 max-w-3xl leading-tight drop-shadow-lg">
             {dict.home.hero_title}
@@ -87,9 +87,9 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <section className="section" id="koleksi">
         <div className="max-w-[1280px] mx-auto px-5 md:px-16">
           <div className="text-center mb-12">
-            <h2 className="font-display text-2xl md:text-3xl text-on-surface mb-3">Koleksi Kami</h2>
+            <h2 className="font-display text-2xl md:text-3xl text-on-surface mb-3">{dict.home.collection_title}</h2>
             <p className="font-body text-sm text-on-surface-variant max-w-lg mx-auto">
-              Jelajahi berbagai kategori produk rajut handmade berkualitas
+              {dict.home.collection_subtitle}
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -130,10 +130,10 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           <div className="flex items-end justify-between mb-8">
             <div>
               <h2 className="font-display text-2xl md:text-3xl text-on-surface mb-2">{dict.home.featured_products}</h2>
-              <p className="font-body text-sm text-on-surface-variant">Produk favorit pelanggan kami</p>
+              <p className="font-body text-sm text-on-surface-variant">{dict.home.featured_subtitle}</p>
             </div>
             <Link href={`/${lang}/categories`} className="hidden md:inline-flex items-center gap-1 font-label text-xs text-primary hover:text-on-primary transition-colors">
-              Lihat Semua
+              {dict.home.view_all}
               <span className="material-symbols-outlined text-sm">arrow_forward</span>
             </Link>
           </div>
@@ -145,7 +145,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           {featuredProducts.length === 0 && (
             <div className="text-center py-16">
               <span className="material-symbols-outlined text-5xl text-outline mb-4 block">inventory_2</span>
-              <p className="font-body text-on-surface-variant">Belum ada produk unggulan saat ini.</p>
+              <p className="font-body text-on-surface-variant">{dict.home.no_featured}</p>
             </div>
           )}
         </div>
@@ -159,24 +159,24 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span className="font-label text-xs uppercase tracking-wider text-on-surface-variant">Janji Kami</span>
+                <span className="font-label text-xs uppercase tracking-wider text-on-surface-variant">{dict.home.our_promise}</span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[
                   {
                     icon: 'palette',
                     title: dict.home.promise_handmade || '100% Buatan Tangan',
-                    desc: 'Setiap produk dirajut dengan cinta dan ketelitian oleh pengrajin lokal kami.',
+                    desc: dict.home.promise_handmade_desc,
                   },
                   {
                     icon: 'verified',
                     title: dict.home.promise_quality || 'Kualitas Premium',
-                    desc: 'Materi pilihan dan kontrol kualitas ketat untuk setiap bagian produk.',
+                    desc: dict.home.promise_quality_desc,
                   },
                   {
                     icon: 'public',
                     title: dict.home.promise_local || 'Karya Pengrajin Lokal',
-                    desc: 'Mendukung ekonomi kreatif lokal dengan produk autentik Indonesia.',
+                    desc: dict.home.promise_local_desc,
                   },
                 ].map((item) => (
                   <div key={item.title} className="text-center md:text-left">

@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import Breadcrumb from '@/components/Breadcrumb';
 import { getCart, createOrder, getProvinces, getCities, getShippingCost } from '@/lib/api';
 import { addToast } from '@/components/Toast';
+import { getClientDictionary } from '@/lib/client-dictionary';
 
 type CartItem = {
   id: string;
@@ -52,6 +53,7 @@ const COURIER_OPTIONS = [
 
 export default function CheckoutPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = use(params);
+  const dict = getClientDictionary(lang);
   const [items, setItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -180,7 +182,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (items.length === 0) {
-      addToast('Keranjang belanja kosong', 'error');
+      addToast(dict.checkout.cart_empty, 'error');
       return;
     }
     setSubmitting(true);
@@ -200,10 +202,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
       if (res.success) {
         setOrderResult(res.data);
       } else {
-        addToast(res.message || 'Gagal membuat pesanan', 'error');
+        addToast(res.message || dict.checkout.toast_order_failed, 'error');
       }
     } catch {
-      addToast('Gagal membuat pesanan', 'error');
+      addToast(dict.checkout.toast_order_failed, 'error');
     } finally {
       setSubmitting(false);
     }
@@ -212,7 +214,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
   if (loading) {
     return (
       <>
-        <Navbar lang={lang} dict={{}} />
+        <Navbar lang={lang} dict={dict} />
         <main className="flex-grow w-full max-w-[1280px] mx-auto px-5 md:px-16 py-8 md:py-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-7 space-y-4">
@@ -225,7 +227,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
             </div>
           </div>
         </main>
-        <Footer lang={lang} />
+        <Footer lang={lang} dict={dict} />
       </>
     );
   }
@@ -233,18 +235,18 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
   if (orderResult) {
     return (
       <>
-        <Navbar lang={lang} dict={{}} />
+        <Navbar lang={lang} dict={dict} />
         <main className="flex-grow w-full max-w-[1280px] mx-auto px-5 md:px-16 py-12">
           <div className="max-w-2xl mx-auto text-center">
             <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
               <span className="material-symbols-outlined text-3xl text-green-600">check_circle</span>
             </div>
-            <h1 className="font-display text-2xl md:text-3xl text-on-surface mb-3">Pesanan Berhasil Dibuat</h1>
+            <h1 className="font-display text-2xl md:text-3xl text-on-surface mb-3">{dict.checkout.order_success}</h1>
             <p className="font-body text-on-surface-variant mb-2">
-              Nomor Pesanan: <span className="font-bold text-on-surface">{orderResult.order_number}</span>
+              {dict.checkout.order_number} <span className="font-bold text-on-surface">{orderResult.order_number}</span>
             </p>
             <p className="font-body text-sm text-on-surface-variant mb-8">
-              Terima kasih atas pesanan Anda. Silakan selesaikan pembayaran untuk memproses pesanan.
+              {dict.checkout.order_success_desc}
             </p>
             {orderResult.midtrans_redirect_url && (
               <a
@@ -254,20 +256,20 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
                 className="btn btn-primary mb-4"
               >
                 <span className="material-symbols-outlined">payment</span>
-                Bayar Sekarang
+                {dict.checkout.pay_now}
               </a>
             )}
             <div className="flex flex-col sm:flex-row gap-3 justify-center mt-4">
               <Link href={`/${lang}/track?order=${orderResult.order_number}`} className="btn btn-secondary">
-                Lacak Pesanan
+                {dict.checkout.track_order}
               </Link>
               <Link href={`/${lang}/categories`} className="btn btn-secondary">
-                Lanjut Belanja
+                {dict.checkout.continue_shopping}
               </Link>
             </div>
           </div>
         </main>
-        <Footer lang={lang} />
+        <Footer lang={lang} dict={dict} />
       </>
     );
   }
@@ -275,80 +277,80 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
   if (items.length === 0) {
     return (
       <>
-        <Navbar lang={lang} dict={{}} />
+        <Navbar lang={lang} dict={dict} />
         <main className="flex-grow w-full max-w-[1280px] mx-auto px-5 md:px-16 py-12">
           <div className="text-center py-20">
             <span className="material-symbols-outlined text-6xl text-outline mb-4 block">shopping_cart</span>
-            <p className="font-body text-lg text-on-surface-variant mb-6">Keranjang belanja Anda masih kosong.</p>
+            <p className="font-body text-lg text-on-surface-variant mb-6">{dict.checkout.cart_empty_page}</p>
             <Link href={`/${lang}/categories`} className="btn btn-primary">
-              Mulai Belanja
+              {dict.checkout.start_shopping}
             </Link>
           </div>
         </main>
-        <Footer lang={lang} />
+        <Footer lang={lang} dict={dict} />
       </>
     );
   }
 
   return (
     <>
-      <Navbar lang={lang} dict={{}} />
+      <Navbar lang={lang} dict={dict} />
       <main className="flex-grow w-full max-w-[1280px] mx-auto px-5 md:px-16 py-8 md:py-12">
         <Breadcrumb
           items={[
-            { label: 'Home', href: `/${lang}` },
-            { label: 'Keranjang', href: `/${lang}/cart` },
-            { label: 'Checkout' },
+            { label: dict.breadcrumb.home, href: `/${lang}` },
+            { label: dict.breadcrumb.cart, href: `/${lang}/cart` },
+            { label: dict.breadcrumb.checkout },
           ]}
         />
 
-        <h1 className="font-display text-2xl md:text-3xl text-on-surface mb-8">Checkout</h1>
+        <h1 className="font-display text-2xl md:text-3xl text-on-surface mb-8">{dict.checkout.title}</h1>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           <div className="lg:col-span-7 space-y-8">
             <section className="card p-6 md:p-8 space-y-6">
               <h2 className="font-display text-xl text-on-surface flex items-center gap-2">
                 <span className="material-symbols-outlined text-secondary">person</span>
-                Informasi Pengiriman
+                {dict.checkout.shipping_info}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                 <div className="md:col-span-2">
-                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Nama Lengkap</label>
-                  <input required value={form.fullName} onChange={(e) => updateField('fullName', e.target.value)} className="input" placeholder="Masukkan nama lengkap" />
+                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">{dict.checkout.name}</label>
+                  <input required value={form.fullName} onChange={(e) => updateField('fullName', e.target.value)} className="input" placeholder={dict.checkout.name_placeholder} />
                 </div>
                 <div>
-                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Email</label>
-                  <input required type="email" value={form.email} onChange={(e) => updateField('email', e.target.value)} className="input" placeholder="contoh@email.com" />
+                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">{dict.checkout.email}</label>
+                  <input required type="email" value={form.email} onChange={(e) => updateField('email', e.target.value)} className="input" placeholder={dict.checkout.email_placeholder} />
                 </div>
                 <div>
-                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Nomor Telepon</label>
-                  <input required type="tel" value={form.phone} onChange={(e) => updateField('phone', e.target.value)} className="input" placeholder="0812-3456-7890" />
+                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">{dict.checkout.phone}</label>
+                  <input required type="tel" value={form.phone} onChange={(e) => updateField('phone', e.target.value)} className="input" placeholder={dict.checkout.phone_placeholder} />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Alamat Lengkap</label>
-                  <textarea required value={form.address} onChange={(e) => updateField('address', e.target.value)} className="input resize-none" rows={3} placeholder="Nama jalan, gedung, no. rumah, dll." />
+                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">{dict.checkout.address}</label>
+                  <textarea required value={form.address} onChange={(e) => updateField('address', e.target.value)} className="input resize-none" rows={3} placeholder={dict.checkout.address_placeholder} />
                 </div>
                 <div>
-                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Provinsi</label>
+                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">{dict.checkout.province}</label>
                   <select required value={form.province} onChange={(e) => updateField('province', e.target.value)} className="input">
-                    <option value="">Pilih Provinsi</option>
+                    <option value="">{dict.checkout.select_province}</option>
                     {provinces.map((p) => (
                       <option key={p.province_id} value={p.province_id}>{p.province}</option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Kota/Kabupaten</label>
+                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">{dict.checkout.city}</label>
                   <select required value={form.city} onChange={(e) => updateField('city', e.target.value)} className="input" disabled={!form.province}>
-                    <option value="">Pilih Kota</option>
+                    <option value="">{dict.checkout.select_city}</option>
                     {cities.map((c) => (
                       <option key={c.city_id} value={c.city_id}>{c.type} {c.city_name}</option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Kode Pos</label>
-                  <input value={form.postalCode} onChange={(e) => updateField('postalCode', e.target.value)} className="input" placeholder="Kodepos" />
+                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">{dict.checkout.postal_code}</label>
+                  <input value={form.postalCode} onChange={(e) => updateField('postalCode', e.target.value)} className="input" placeholder={dict.checkout.postal_placeholder} />
                 </div>
               </div>
             </section>
@@ -356,10 +358,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
             <section className="card p-6 md:p-8 space-y-6">
               <h2 className="font-display text-xl text-on-surface flex items-center gap-2">
                 <span className="material-symbols-outlined text-secondary">local_shipping</span>
-                Pengiriman
+                {dict.checkout.shipping_section}
               </h2>
               <div>
-                <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Kurir</label>
+                <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">{dict.checkout.courier}</label>
                 <div className="grid grid-cols-3 gap-3">
                   {COURIER_OPTIONS.map((c) => (
                     <button
@@ -387,7 +389,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
 
               {shippingOptions.length > 0 && (
                 <div className="space-y-2">
-                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Layanan & Tarif</label>
+                  <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">{dict.checkout.service_fee}</label>
                   {shippingOptions.map((opt) => {
                     const value = `${opt.service}__${opt.description}`;
                     const selected = form.shippingService === value;
@@ -409,7 +411,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
                           />
                           <div>
                             <p className="font-body text-sm font-medium text-on-surface">{opt.service.toUpperCase()} - {opt.description}</p>
-                            <p className="font-body text-xs text-on-surface-variant">Estimasi {opt.etd} hari</p>
+                            <p className="font-body text-xs text-on-surface-variant">{dict.checkout.estimate_days.replace('{etd}', opt.etd)}</p>
                           </div>
                         </div>
                         <span className="font-display text-base text-primary font-bold">Rp {opt.cost.toLocaleString('id-ID')}</span>
@@ -423,7 +425,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
 
           <div className="lg:col-span-5">
             <div className="linen-card rounded-xl p-6 lg:p-8 lg:sticky lg:top-24 space-y-6">
-              <h3 className="font-display text-xl text-on-surface">Ringkasan Pesanan</h3>
+              <h3 className="font-display text-xl text-on-surface">{dict.checkout.order_summary}</h3>
               <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2">
                 {items.map((item) => (
                   <div key={item.id} className="flex gap-3 items-start">
@@ -443,17 +445,17 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
 
               <div className="border-t border-soft-clay/50 pt-4 space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="font-body text-on-surface-variant">Subtotal</span>
+                  <span className="font-body text-on-surface-variant">{dict.checkout.subtotal}</span>
                   <span className="font-body text-on-surface">Rp {subtotal.toLocaleString('id-ID')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="font-body text-on-surface-variant">Ongkos Kirim</span>
+                  <span className="font-body text-on-surface-variant">{dict.checkout.shipping_cost}</span>
                   <span className="font-body text-on-surface">
-                    {selectedShippingCost > 0 ? `Rp ${selectedShippingCost.toLocaleString('id-ID')}` : fetchingShipping ? 'Menghitung...' : 'Dihitung setelah layanan dipilih'}
+                    {selectedShippingCost > 0 ? `Rp ${selectedShippingCost.toLocaleString('id-ID')}` : fetchingShipping ? dict.checkout.shipping_calculating : dict.checkout.shipping_after_service}
                   </span>
                 </div>
                 <div className="flex justify-between items-end pt-3 border-t border-soft-clay/50">
-                  <span className="font-body text-sm text-on-surface">Total</span>
+                  <span className="font-body text-sm text-on-surface">{dict.checkout.total}</span>
                   <span className="font-display text-2xl font-bold text-primary">Rp {total.toLocaleString('id-ID')}</span>
                 </div>
               </div>
@@ -462,21 +464,21 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
                 {submitting ? (
                   <>
                     <span className="material-symbols-outlined animate-spin">sync</span>
-                    Memproses...
+                    {dict.checkout.processing}
                   </>
                 ) : (
                   <>
                     <span className="material-symbols-outlined">lock</span>
-                    Bayar Sekarang
+                    {dict.checkout.pay_now}
                   </>
                 )}
               </button>
-              <p className="text-center font-body text-xs text-on-surface-variant">Pembayaran aman via Midtrans.</p>
+              <p className="text-center font-body text-xs text-on-surface-variant">{dict.checkout.secure_payment}</p>
             </div>
           </div>
         </form>
       </main>
-      <Footer lang={lang} />
+      <Footer lang={lang} dict={dict} />
     </>
   );
 }

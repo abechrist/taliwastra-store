@@ -10,10 +10,7 @@ import { addToCart } from '@/lib/api';
 import { addToast } from '@/components/Toast';
 import type { Product } from '@/components/ProductCard';
 
-type Dictionary = {
-  nav: { home: string; categories: string; contact?: string };
-  product: { out_of_stock: string; in_stock: string; quantity: string; add_to_cart: string; description: string };
-};
+type Dictionary = Record<string, any>;
 
 type Props = {
   slug: string;
@@ -56,11 +53,11 @@ export default function ProductDetailClient({ slug, lang, dict, initialProduct, 
     if (!product) return;
     try {
       await addToCart(product.id, quantity);
-      addToast('Produk ditambahkan ke keranjang!', 'success');
+      addToast(dict.product.toast_added, 'success');
       window.dispatchEvent(new CustomEvent('cart:updated'));
       setQuantity(1);
     } catch {
-      addToast('Gagal menambahkan produk', 'error');
+      addToast(dict.product.toast_add_failed, 'error');
     }
   };
 
@@ -87,9 +84,9 @@ export default function ProductDetailClient({ slug, lang, dict, initialProduct, 
       <main className="flex-grow flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
           <span className="material-symbols-outlined text-5xl text-outline mb-4 block">product_off</span>
-          <p className="font-body text-lg text-on-surface-variant">Produk tidak ditemukan.</p>
+          <p className="font-body text-lg text-on-surface-variant">{dict.product.not_found}</p>
           <Link href={`/${lang}/categories`} className="btn btn-primary mt-6">
-            Kembali ke Katalog
+            {dict.product.back_to_catalog}
           </Link>
         </div>
       </main>
@@ -129,7 +126,7 @@ export default function ProductDetailClient({ slug, lang, dict, initialProduct, 
                 <span key={tag} className="badge badge-secondary">{tag}</span>
               ))}
               {product.material && (
-                <span className="badge badge-secondary">Material: {product.material}</span>
+                <span className="badge badge-secondary">{dict.product.material}: {product.material}</span>
               )}
             </div>
 
@@ -146,7 +143,7 @@ export default function ProductDetailClient({ slug, lang, dict, initialProduct, 
               </p>
               {product.stock !== undefined && (
                 <p className="font-body text-xs text-on-surface-variant mt-2">
-                  Stok tersedia: {product.stock} unit
+                  {dict.product.stock_available.replace('{stock}', String(product.stock))}
                 </p>
               )}
             </div>
@@ -192,8 +189,8 @@ export default function ProductDetailClient({ slug, lang, dict, initialProduct, 
         {related.length > 0 && (
           <section className="mt-20 md:mt-28">
             <div className="mb-8">
-              <h2 className="font-display text-2xl text-on-surface mb-2">Produk Terkait</h2>
-              <p className="font-body text-sm text-on-surface-variant">Mungkin juga Anda suka</p>
+              <h2 className="font-display text-2xl text-on-surface mb-2">{dict.product.related_title}</h2>
+              <p className="font-body text-sm text-on-surface-variant">{dict.product.related_subtitle}</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {related.map((p) => (

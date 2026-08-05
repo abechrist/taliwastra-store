@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { addToCart } from '@/lib/api';
 import { addToast } from './Toast';
+import { getClientDictionary } from '@/lib/client-dictionary';
 
 export type Product = {
   id: string;
@@ -27,6 +28,7 @@ export type Product = {
 };
 
 export default function ProductCard({ product, lang = 'id' }: { product: Product; lang?: string }) {
+  const dict = getClientDictionary(lang);
   const imageUrl = product.images?.find((i) => i.is_primary)?.url || product.images?.[0]?.url || '';
   const tag = product.tags?.[0];
   const hasDiscount = product.original_price && Number(product.original_price) > Number(product.price);
@@ -38,10 +40,10 @@ export default function ProductCard({ product, lang = 'id' }: { product: Product
     e.stopPropagation();
     try {
       await addToCart(product.id, 1);
-      addToast('Produk ditambahkan ke keranjang!', 'success');
+      addToast(dict.product.toast_added, 'success');
       window.dispatchEvent(new CustomEvent('cart:updated'));
     } catch {
-      addToast('Gagal menambahkan produk', 'error');
+      addToast(dict.product.toast_add_failed, 'error');
     }
   };
 
@@ -73,7 +75,7 @@ export default function ProductCard({ product, lang = 'id' }: { product: Product
         )}
         {isOutOfStock && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <span className="badge badge-error text-sm">Habis Terjual</span>
+            <span className="badge badge-error text-sm">{dict.product.out_of_stock}</span>
           </div>
         )}
       </div>
@@ -98,7 +100,7 @@ export default function ProductCard({ product, lang = 'id' }: { product: Product
             onClick={handleAddToCart}
             disabled={isOutOfStock}
             className="shrink-0 text-primary hover:bg-primary hover:text-white p-2.5 rounded-full transition-colors border border-soft-clay hover:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
-            title="Tambah ke keranjang"
+            title={dict.product.add_to_cart}
           >
             <span className="material-symbols-outlined text-[20px]">
               {isOutOfStock ? 'shopping_bag' : 'add_shopping_cart'}

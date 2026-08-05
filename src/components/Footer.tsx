@@ -49,29 +49,29 @@ export default function Footer({ lang, dict }: { lang?: string; dict?: any }) {
 
           <div className="md:col-span-2">
             <h4 className="font-label text-xs uppercase tracking-wider text-on-surface mb-4">
-              Layanan
+              {dict?.footer?.services_title || 'Layanan'}
             </h4>
             <ul className="space-y-3">
               <li>
-                <span className="font-body text-sm text-on-secondary-fixed-variant">Pengiriman Seluruh Indonesia</span>
+                <span className="font-body text-sm text-on-secondary-fixed-variant">{dict?.footer?.shipping || 'Pengiriman Seluruh Indonesia'}</span>
               </li>
               <li>
-                <span className="font-body text-sm text-on-secondary-fixed-variant">Pembayaran Aman</span>
+                <span className="font-body text-sm text-on-secondary-fixed-variant">{dict?.footer?.payment || 'Pembayaran Aman'}</span>
               </li>
               <li>
-                <span className="font-body text-sm text-on-secondary-fixed-variant">Produk Handmade</span>
+                <span className="font-body text-sm text-on-secondary-fixed-variant">{dict?.footer?.handmade || 'Produk Handmade'}</span>
               </li>
             </ul>
           </div>
 
           <div className="md:col-span-2">
             <h4 className="font-label text-xs uppercase tracking-wider text-on-surface mb-4">
-              Kontak
+              {dict?.footer?.contact_title || 'Kontak'}
             </h4>
             <ul className="space-y-3">
               <li className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm text-on-surface-variant">location_on</span>
-                <span className="font-body text-sm text-on-secondary-fixed-variant">Indonesia</span>
+                <span className="font-body text-sm text-on-secondary-fixed-variant">{dict?.footer?.country || 'Indonesia'}</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm text-on-surface-variant">email</span>
@@ -83,7 +83,7 @@ export default function Footer({ lang, dict }: { lang?: string; dict?: any }) {
 
         <div className="border-t border-soft-clay/30 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="font-body text-xs text-on-surface-variant">
-            &copy; {currentYear} Taliwastra Handmade. Crafted with love.
+            &copy; {currentYear} {dict?.footer?.copyright || 'Taliwastra Handmade. Dibuat dengan cinta.'}
           </p>
           <div className="flex items-center gap-4 text-on-surface-variant">
             <span className="material-symbols-outlined text-2xl" title="Visa">credit_card</span>

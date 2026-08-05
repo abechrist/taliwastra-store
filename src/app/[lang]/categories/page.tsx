@@ -6,12 +6,14 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import { getProducts, getCategories } from '@/lib/api';
+import { getClientDictionary } from '@/lib/client-dictionary';
 import type { Product } from '@/components/ProductCard';
 
 type Category = { id: string; name: string; slug: string; description?: string };
 
 export default function CategoriesPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = use(params);
+  const dict = getClientDictionary(lang);
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -76,17 +78,17 @@ export default function CategoriesPage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
-      <Navbar lang={lang} dict={{}} />
+      <Navbar lang={lang} dict={dict} />
       <main className="flex-grow w-full max-w-[1280px] mx-auto px-5 md:px-16 py-8 md:py-12">
         <div className="mb-8">
-          <h1 className="font-display text-2xl md:text-3xl text-on-surface mb-2">Koleksi Rajutan</h1>
-          <p className="font-body text-sm text-on-surface-variant">Temukan produk handmade terbaik kami</p>
+          <h1 className="font-display text-2xl md:text-3xl text-on-surface mb-2">{dict.categories.title}</h1>
+          <p className="font-body text-sm text-on-surface-variant">{dict.categories.subtitle}</p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
           <aside className={`lg:w-64 flex-shrink-0 space-y-6 ${filterOpen ? 'block' : 'hidden lg:block'}`}>
             <div className="card p-5 space-y-4">
-              <h3 className="font-body text-sm font-semibold uppercase tracking-wider text-on-surface-variant">Kategori</h3>
+              <h3 className="font-body text-sm font-semibold uppercase tracking-wider text-on-surface-variant">{dict.categories.category}</h3>
               <ul className="space-y-2">
                 <li>
                   <button
@@ -95,7 +97,7 @@ export default function CategoriesPage({ params }: { params: Promise<{ lang: str
                       !selectedCategory ? 'text-primary bg-primary/5 font-medium' : 'text-on-surface hover:text-primary'
                     }`}
                   >
-                    Semua Produk
+                    {dict.categories.all_products}
                   </button>
                 </li>
                 {categories.map((cat) => (
@@ -123,7 +125,7 @@ export default function CategoriesPage({ params }: { params: Promise<{ lang: str
                 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
                 <input
                   type="text"
-                  placeholder="Cari produk..."
+                  placeholder={dict.categories.search_placeholder}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   className="input pl-10"
@@ -134,23 +136,23 @@ export default function CategoriesPage({ params }: { params: Promise<{ lang: str
                 onChange={(e) => setSortBy(e.target.value as 'newest' | 'price_asc' | 'price_desc' | 'name')}
                 className="input w-full sm:w-auto sm:min-w-[180px]"
               >
-                <option value="newest">Terbaru</option>
-                <option value="price_asc">Harga: Rendah ke Tinggi</option>
-                <option value="price_desc">Harga: Tinggi ke Rendah</option>
-                <option value="name">Nama A-Z</option>
+                <option value="newest">{dict.categories.sort_newest}</option>
+                <option value="price_asc">{dict.categories.sort_price_asc}</option>
+                <option value="price_desc">{dict.categories.sort_price_desc}</option>
+                <option value="name">{dict.categories.sort_name}</option>
               </select>
               <button
                 onClick={() => setFilterOpen(!filterOpen)}
                 className="lg:hidden btn btn-secondary flex items-center gap-2"
               >
                 <span className="material-symbols-outlined text-sm">filter_list</span>
-                Filter
+                {dict.categories.filter}
               </button>
             </div>
 
             {activeCategoryName && (
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-sm text-on-surface-variant">Filter aktif:</span>
+                <span className="text-sm text-on-surface-variant">{dict.categories.active_filter}</span>
                 <span className="badge badge-primary">{activeCategoryName}</span>
                 <button onClick={() => setSelectedCategory('')} className="text-on-surface-variant hover:text-primary">
                   <span className="material-symbols-outlined text-sm">close</span>
@@ -167,25 +169,25 @@ export default function CategoriesPage({ params }: { params: Promise<{ lang: str
             ) : filtered.length === 0 ? (
               <div className="text-center py-16">
                 <span className="material-symbols-outlined text-5xl text-outline mb-4 block">search_off</span>
-                <p className="font-body text-on-surface-variant">Tidak ada produk yang ditemukan.</p>
+                <p className="font-body text-on-surface-variant">{dict.categories.no_results}</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filtered.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard key={product.id} product={product} lang={lang} />
                 ))}
               </div>
             )}
 
             <div className="mt-8 text-center">
               <p className="font-body text-sm text-on-surface-variant">
-                Menampilkan {filtered.length} produk
+                {dict.categories.results_count.replace('{count}', String(filtered.length))}
               </p>
             </div>
           </section>
         </div>
       </main>
-      <Footer lang={lang} />
+      <Footer lang={lang} dict={dict} />
       </>
   );
 }

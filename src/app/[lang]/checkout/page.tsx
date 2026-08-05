@@ -344,7 +344,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ lang: strin
                   <select required value={form.city} onChange={(e) => updateField('city', e.target.value)} className="input" disabled={!form.province}>
                     <option value="">{dict.checkout.select_city}</option>
                     {cities.map((c) => (
-                      <option key={c.city_id} value={c.city_id}>{c.type} {c.city_name}</option>
+                      <option key={c.city_id} value={c.city_id}>{c.type ? `${c.type} ${c.city_name}` : c.city_name}</option>
                     ))}
                   </select>
                 </div>

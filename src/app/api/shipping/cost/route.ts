@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const RAJAONGKIR_BASE = process.env.RAJAONGKIR_IS_PRO === 'true'
-  ? 'https://pro.rajaongkir.com/api'
-  : 'https://api.rajaongkir.com/starter';
+const RAJAONGKIR_BASE = 'https://rajaongkir.komerce.id/api/v1';
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,7 +15,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, data: [] });
     }
 
-    const response = await fetch(`${RAJAONGKIR_BASE}/cost`, {
+    const response = await fetch(`${RAJAONGKIR_BASE}/calculate/domestic-cost`, {
       method: 'POST',
       headers: {
         key: process.env.RAJAONGKIR_API_KEY!,
@@ -30,8 +28,18 @@ export async function POST(req: NextRequest) {
         courier,
       }),
     });
-    const data = await response.json();
-    return NextResponse.json({ success: true, data: (data.rajaongkir?.results as Record<string, unknown>[]) || [] });
+    const json = await response.json();
+    const raw = (json.data || []) as { code: string; service: string; description?: string; cost: number; etd?: string }[];
+    const results = raw.map((r) => ({
+      service: r.code,
+      costs: [
+        {
+          service: r.service,
+          cost: [{ value: Number(r.cost) || 0, etd: r.etd || '-' }],
+        },
+      ],
+    }));
+    return NextResponse.json({ success: true, data: results });
   } catch (err) {
     console.error('getShippingCost error:', err);
     return NextResponse.json({ success: true, data: [] });

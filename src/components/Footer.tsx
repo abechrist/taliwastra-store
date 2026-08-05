@@ -16,11 +16,31 @@ export default function Footer({ lang, dict }: { lang?: string; dict?: any }) {
               {dict?.footer?.about || 'Tali Wastra adalah platform yang menghubungkan karya rajut autentik pengrajin lokal dengan pecinta seni di seluruh dunia.'}
             </p>
             <div className="flex gap-3 pt-2">
-              {['public', 'chat', 'email'].map((icon) => (
-                <span key={icon} className="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">
-                  {icon}
-                </span>
-              ))}
+              <a
+                href="https://www.instagram.com/taliwastra/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="text-on-surface-variant hover:text-primary cursor-pointer transition-colors"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+              <a
+                href="https://www.threads.com/@taliwastra"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Threads"
+                className="text-on-surface-variant hover:text-primary cursor-pointer transition-colors"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 21c-4.5 0-7-2.5-7-6.5 0-3.6 2.3-5.6 5.2-5.6 2.5 0 4.3 1.6 4.3 4 0 1.9-1.3 3.1-2.9 3.1-1.4 0-2.4-.9-2.4-2.3 0-1.5 1.2-2.5 3-2.5" />
+                  <path d="M12 21c3.6 0 5.8-3.8 5.4-7.4-.3-2.8-2-5-4.4-5.9" />
+                </svg>
+              </a>
             </div>
           </div>
 
@@ -71,7 +91,7 @@ export default function Footer({ lang, dict }: { lang?: string; dict?: any }) {
             <ul className="space-y-3">
               <li className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm text-on-surface-variant">location_on</span>
-                <span className="font-body text-sm text-on-secondary-fixed-variant">{dict?.footer?.country || 'Indonesia'}</span>
+                <span className="font-body text-sm text-on-secondary-fixed-variant">{dict?.footer?.address || 'Perum. Gunungsari Asri Gg. Anggrek No. 4, Sidorejo Kidul, Tingkir, Kota Salatiga 50741'}</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm text-on-surface-variant">email</span>

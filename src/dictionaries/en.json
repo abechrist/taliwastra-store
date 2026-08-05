@@ -60,6 +60,7 @@
     "title": "Contact Us",
     "subtitle": "Have questions or want product consultation? Fill in the form or reach us through the contacts below.",
     "address": "Address",
+    "address_value": "Perum. Gunungsari Asri Gg. Anggrek No. 4, Sidorejo Kidul, Tingkir, Salatiga City 50741",
     "email": "Email",
     "whatsapp": "WhatsApp",
     "name_label": "Name",
@@ -192,6 +193,7 @@
     "payment": "Secure Payment",
     "handmade": "Handmade Products",
     "contact_title": "Contact",
+    "address": "Perum. Gunungsari Asri Gg. Anggrek No. 4, Sidorejo Kidul, Tingkir, Salatiga City 50741",
     "country": "Indonesia",
     "copyright": "Taliwastra Handmade. Crafted with love."
   },

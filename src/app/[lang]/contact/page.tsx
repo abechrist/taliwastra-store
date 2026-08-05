@@ -51,7 +51,7 @@ export default function ContactPage({ params }: { params: Promise<{ lang: string
                 <span className="material-symbols-outlined text-secondary mt-0.5">location_on</span>
                 <div>
                   <p className="font-body text-sm font-medium text-on-surface">{dict.contact.address}</p>
-                  <p className="font-body text-sm text-on-surface-variant">{dict.footer.country}</p>
+                  <p className="font-body text-sm text-on-surface-variant">{dict.contact.address_value}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -65,7 +65,7 @@ export default function ContactPage({ params }: { params: Promise<{ lang: string
                 <span className="material-symbols-outlined text-secondary mt-0.5">phone</span>
                 <div>
                   <p className="font-body text-sm font-medium text-on-surface">{dict.contact.whatsapp}</p>
-                  <p className="font-body text-sm text-on-surface-variant">+62 812-3456-7890</p>
+                  <p className="font-body text-sm text-on-surface-variant">+62 838-3634-4244</p>
                 </div>
               </div>
             </div>

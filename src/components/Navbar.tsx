@@ -9,11 +9,17 @@ export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
   const pathname = usePathname();
   const router = useRouter();
   const [cartCount, setCartCount] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const navLabels = dict?.nav || {};
   const homeLabel = navLabels.home || 'Home';
   const categoriesLabel = navLabels.categories || 'Kategori';
   const contactLabel = navLabels.contact || 'Kontak';
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   const isActive = (path: string) => {
     const cleanPath = pathname.replace(`/${lang}`, '') || '/';
@@ -105,8 +111,63 @@ export default function Navbar({ lang, dict }: { lang: string; dict?: any }) {
               </span>
             )}
           </Link>
+
+          <button
+            onClick={() => setMobileOpen((open) => !open)}
+            className="md:hidden text-primary hover:text-primary-container transition-colors p-2 rounded-full hover:bg-surface-container-high"
+            aria-label="Menu"
+            aria-expanded={mobileOpen}
+          >
+            <span className="material-symbols-outlined text-[26px]">{mobileOpen ? 'close' : 'menu'}</span>
+          </button>
         </div>
       </div>
+
+      {mobileOpen && (
+        <div className="md:hidden border-t border-soft-clay/30 bg-warm-canvas px-5 pb-6 pt-2">
+          <nav className="flex flex-col">
+            <Link
+              href={`/${lang}`}
+              onClick={() => setMobileOpen(false)}
+              className={`flex items-center justify-between py-3 border-b border-soft-clay/20 font-body text-base ${isActive('/') ? 'text-primary font-bold' : 'text-secondary hover:text-primary'}`}
+            >
+              {homeLabel}
+            </Link>
+            <Link
+              href={`/${lang}/categories`}
+              onClick={() => setMobileOpen(false)}
+              className={`flex items-center justify-between py-3 border-b border-soft-clay/20 font-body text-base ${isActive('/categories') ? 'text-primary font-bold' : 'text-secondary hover:text-primary'}`}
+            >
+              {categoriesLabel}
+            </Link>
+            <Link
+              href={`/${lang}/contact`}
+              onClick={() => setMobileOpen(false)}
+              className={`flex items-center justify-between py-3 border-b border-soft-clay/20 font-body text-base ${isActive('/contact') ? 'text-primary font-bold' : 'text-secondary hover:text-primary'}`}
+            >
+              {contactLabel}
+            </Link>
+
+            <div className="flex items-center justify-between pt-5">
+              <span className="font-label text-xs text-on-surface-variant uppercase tracking-wider">Bahasa</span>
+              <div className="flex bg-surface-container-lowest rounded-full border border-outline-variant overflow-hidden">
+                <button
+                  onClick={() => switchLanguage('id')}
+                  className={`px-4 py-1.5 text-xs font-label ${lang === 'id' ? 'bg-primary text-white' : 'text-on-surface-variant hover:bg-surface-container-high'}`}
+                >
+                  ID
+                </button>
+                <button
+                  onClick={() => switchLanguage('en')}
+                  className={`px-4 py-1.5 text-xs font-label ${lang === 'en' ? 'bg-primary text-white' : 'text-on-surface-variant hover:bg-surface-container-high'}`}
+                >
+                  EN
+                </button>
+              </div>
+            </div>
+          </nav>
+        </div>
+      )}
     </nav>
   );
 }

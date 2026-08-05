@@ -32,6 +32,7 @@ CREATE TABLE products (
   original_price DECIMAL(12, 2),
   stock INT NOT NULL DEFAULT 0,
   weight_grams INT NOT NULL DEFAULT 100,
+  dimensions TEXT,
   is_featured BOOLEAN NOT NULL DEFAULT false,
   is_active BOOLEAN NOT NULL DEFAULT true,
   tags TEXT[] DEFAULT '{}',

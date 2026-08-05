@@ -15,6 +15,7 @@ async function updateDb() {
     await sql`ALTER TABLE products ADD COLUMN IF NOT EXISTS name_en VARCHAR(200)`;
     await sql`ALTER TABLE products ADD COLUMN IF NOT EXISTS description_en TEXT`;
     await sql`ALTER TABLE products ADD COLUMN IF NOT EXISTS original_price DECIMAL(12, 2)`;
+    await sql`ALTER TABLE products ADD COLUMN IF NOT EXISTS dimensions TEXT`;
     console.log('Product columns ready.');
   } catch (err: any) {
     console.error('Error adding columns:', err.message);

@@ -38,6 +38,7 @@ export const products = pgTable(
     original_price: decimal('original_price', { precision: 12, scale: 2 }),
     stock: integer('stock').default(0).notNull(),
     weight_grams: integer('weight_grams').default(100).notNull(),
+    dimensions: text('dimensions'),
     is_featured: boolean('is_featured').default(false).notNull(),
     is_active: boolean('is_active').default(true).notNull(),
     tags: text('tags').array().default([]),

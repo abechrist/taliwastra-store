@@ -49,12 +49,15 @@ export default async function AdminProducts() {
                     </span>
                   </td>
                   <td className="p-4 border-b border-soft-clay/30 text-right">
-                    <form action={async () => {
-                      'use server';
-                      await deleteProductAction(product.id);
-                    }}>
-                      <button type="submit" className="text-error hover:underline text-sm font-medium">Hapus</button>
-                    </form>
+                    <div className="flex items-center justify-end gap-4">
+                      <Link href={`/admin/products/${product.id}/edit`} className="text-primary hover:underline text-sm font-medium">Edit</Link>
+                      <form action={async () => {
+                        'use server';
+                        await deleteProductAction(product.id);
+                      }}>
+                        <button type="submit" className="text-error hover:underline text-sm font-medium">Hapus</button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               ))}

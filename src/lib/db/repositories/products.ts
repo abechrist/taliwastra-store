@@ -25,6 +25,7 @@ const productColumns = {
   original_price: products.original_price,
   stock: products.stock,
   weight_grams: products.weight_grams,
+  dimensions: products.dimensions,
   is_featured: products.is_featured,
   is_active: products.is_active,
   category_id: products.category_id,
@@ -68,6 +69,7 @@ function toProductView(r: any) {
     original_price: r.original_price != null ? Number(r.original_price) : null,
     stock: r.stock,
     weight_grams: r.weight_grams,
+    dimensions: r.dimensions,
     is_featured: r.is_featured,
     is_active: r.is_active,
     category_id: r.category_id,
@@ -137,6 +139,7 @@ export type NewProductInput = {
   original_price?: string | number | null;
   stock: string | number;
   weight_grams?: string | number;
+  dimensions?: string | null;
   category_id?: string | null;
   image_url?: string | null;
   is_featured?: boolean;
@@ -158,6 +161,7 @@ export async function createProduct(input: NewProductInput) {
       original_price: input.original_price ? String(input.original_price) : null,
       stock: Number(input.stock ?? 0),
       weight_grams: Number(input.weight_grams ?? 100),
+      dimensions: input.dimensions || null,
       category_id: input.category_id || null,
       is_featured: input.is_featured ?? false,
       is_active: true,
@@ -173,6 +177,70 @@ export async function createProduct(input: NewProductInput) {
     });
   }
   return created.id;
+}
+
+export async function getProductById(id: string) {
+  const db = getDb();
+  const rows = await db
+    .select(productColumns)
+    .from(products)
+    .leftJoin(categories, eq(products.category_id, categories.id))
+    .where(eq(products.id, id))
+    .limit(1);
+  return rows[0] ? toProductView(rows[0]) : null;
+}
+
+export type UpdateProductInput = {
+  name: string;
+  name_en?: string | null;
+  slug: string;
+  description?: string | null;
+  description_en?: string | null;
+  material?: string | null;
+  price: string | number;
+  original_price?: string | number | null;
+  stock: string | number;
+  weight_grams?: string | number;
+  dimensions?: string | null;
+  category_id?: string | null;
+  image_url?: string | null;
+  is_featured?: boolean;
+  is_active?: boolean;
+  tags?: string[];
+};
+
+export async function updateProduct(id: string, input: UpdateProductInput) {
+  const db = getDb();
+  await db
+    .update(products)
+    .set({
+      name: input.name,
+      name_en: input.name_en || null,
+      slug: input.slug,
+      description: input.description || null,
+      description_en: input.description_en || null,
+      material: input.material || null,
+      price: String(input.price),
+      original_price: input.original_price ? String(input.original_price) : null,
+      stock: Number(input.stock ?? 0),
+      weight_grams: Number(input.weight_grams ?? 100),
+      dimensions: input.dimensions || null,
+      category_id: input.category_id || null,
+      is_featured: input.is_featured ?? false,
+      is_active: input.is_active ?? true,
+      tags: input.tags ?? [],
+      updated_at: new Date(),
+    })
+    .where(eq(products.id, id));
+
+  if (input.image_url) {
+    await db.delete(productImages).where(eq(productImages.product_id, id));
+    await db.insert(productImages).values({
+      product_id: id,
+      url: input.image_url,
+      is_primary: true,
+    });
+  }
 }
 
 export async function deleteProduct(id: string) {

@@ -1,26 +1,46 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { createProductAction } from '../../actions/products';
+import { useRouter } from 'next/navigation';
+import { updateProductAction } from '../../../actions/products';
 
 type Category = {
   id: string;
   name: string;
 };
 
-export default function NewProductPage() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [isUploading, setIsUploading] = useState(false);
-  const [imageUrl, setImageUrl] = useState('');
-  const [previewUrl, setPreviewUrl] = useState('');
+type Product = {
+  id: string;
+  name: string;
+  name_en: string | null;
+  slug: string;
+  description: string | null;
+  description_en: string | null;
+  material: string | null;
+  price: number;
+  original_price: number | null;
+  stock: number;
+  weight_grams: number;
+  dimensions: string | null;
+  is_featured: boolean;
+  is_active: boolean;
+  category_id: string | null;
+  images: { url: string; alt_text: string | null; is_primary: boolean }[];
+};
 
-  useEffect(() => {
-    fetch('/api/categories')
-      .then((res) => res.json())
-      .then((data) => setCategories(data.data || []))
-      .catch((err) => console.error('Error fetching categories:', err));
-  }, []);
+export default function EditProductForm({
+  product,
+  categories,
+}: {
+  product: Product;
+  categories: Category[];
+}) {
+  const router = useRouter();
+  const currentImage = product.images?.find((img) => img.is_primary)?.url || product.images?.[0]?.url || '';
+  const [isUploading, setIsUploading] = useState(false);
+  const [imageUrl, setImageUrl] = useState(currentImage);
+  const [previewUrl, setPreviewUrl] = useState(currentImage);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -56,12 +76,18 @@ export default function NewProductPage() {
           <span className="material-symbols-outlined text-lg">arrow_back</span>
         </Link>
         <div>
-          <h1 className="font-display text-2xl text-on-surface">Tambah Produk Baru</h1>
-          <p className="font-body text-xs text-on-surface-variant">Lengkapi informasi produk di bawah ini</p>
+          <h1 className="font-display text-2xl text-on-surface">Edit Produk</h1>
+          <p className="font-body text-xs text-on-surface-variant">Perbarui informasi produk di bawah ini</p>
         </div>
       </div>
 
-      <form action={createProductAction as unknown as string} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <form
+        action={async (formData) => {
+          await updateProductAction(product.id, formData);
+          router.refresh();
+        }}
+        className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+      >
         <div className="lg:col-span-2 space-y-6">
           <div className="card p-6 md:p-8 space-y-6">
             <h2 className="font-display text-lg text-on-surface border-b border-soft-clay/30 pb-4">Informasi Dasar</h2>
@@ -69,27 +95,27 @@ export default function NewProductPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Nama Produk (Indonesia) <span className="text-error">*</span></label>
-                <input type="text" name="name" required className="input" placeholder="Contoh: Dompet Anyam Eksklusif" />
+                <input type="text" name="name" required defaultValue={product.name} className="input" placeholder="Contoh: Dompet Anyam Eksklusif" />
               </div>
               <div>
                 <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Nama Produk (Inggris)</label>
-                <input type="text" name="name_en" className="input" placeholder="Example: Exclusive Woven Wallet" />
+                <input type="text" name="name_en" defaultValue={product.name_en || ''} className="input" placeholder="Example: Exclusive Woven Wallet" />
               </div>
             </div>
 
             <div>
               <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Deskripsi Produk (Indonesia) <span className="text-error">*</span></label>
-              <textarea name="description" required rows={4} className="input resize-none" placeholder="Jelaskan detail produk ini..." />
+              <textarea name="description" required rows={4} defaultValue={product.description || ''} className="input resize-none" placeholder="Jelaskan detail produk ini..." />
             </div>
 
             <div>
               <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Deskripsi Produk (Inggris)</label>
-              <textarea name="description_en" rows={4} className="input resize-none" placeholder="Product details in english..." />
+              <textarea name="description_en" rows={4} defaultValue={product.description_en || ''} className="input resize-none" placeholder="Product details in english..." />
             </div>
 
             <div>
               <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Kategori</label>
-              <select name="category_id" className="input">
+              <select name="category_id" defaultValue={product.category_id || ''} className="input">
                 <option value="">Pilih Kategori</option>
                 {categories.map((cat) => (
                   <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -100,22 +126,22 @@ export default function NewProductPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Harga Jual <span className="text-error">*</span></label>
-                <input type="number" name="price" required className="input" placeholder="0" />
+                <input type="number" name="price" required defaultValue={product.price} className="input" placeholder="0" />
               </div>
               <div>
                 <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Harga Asli (Coret)</label>
-                <input type="number" name="original_price" className="input" placeholder="0 (Opsional)" />
+                <input type="number" name="original_price" defaultValue={product.original_price ?? ''} className="input" placeholder="0 (Opsional)" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Berat Bersih (gram) <span className="normal-case">/ Net Weight</span></label>
-                <input type="number" name="weight_grams" defaultValue="100" className="input" placeholder="Contoh: 100" />
+                <input type="number" name="weight_grams" defaultValue={product.weight_grams} className="input" placeholder="Contoh: 100" />
               </div>
               <div>
                 <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Dimensi (cm) <span className="normal-case">/ Dimensions</span></label>
-                <input type="text" name="dimensions" className="input" placeholder="Contoh: 20 x 15 x 5" />
+                <input type="text" name="dimensions" defaultValue={product.dimensions || ''} className="input" placeholder="Contoh: 20 x 15 x 5" />
               </div>
             </div>
           </div>
@@ -149,14 +175,14 @@ export default function NewProductPage() {
 
             <div>
               <label className="block font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Stok Produk <span className="text-error">*</span></label>
-              <input type="number" name="stock" required defaultValue="0" className="input text-center text-lg font-body" />
+              <input type="number" name="stock" required defaultValue={product.stock} className="input text-center text-lg font-body" />
             </div>
           </div>
 
           <div className="sticky top-6 space-y-3">
             <button type="submit" className="btn btn-primary w-full py-3">
               <span className="material-symbols-outlined text-sm">save</span>
-              Simpan Produk
+              Simpan Perubahan
             </button>
             <Link href="/admin/products" className="btn btn-secondary w-full text-center">
               Batal

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Noto_Serif, Be_Vietnam_Pro, Montserrat } from 'next/font/google';
 import './globals.css';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://taliwastra-store.vercel.app';
 
 const notoSerif = Noto_Serif({
   subsets: ['latin'],
